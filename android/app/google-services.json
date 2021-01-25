@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "969949418855",
+    "project_id": "project-parkway",
+    "storage_bucket": "project-parkway.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:969949418855:android:23f71160dbca12a35c4bc2",
+        "android_client_info": {
+          "package_name": "com.example.parkway"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "969949418855-gjf9a5fuuuppuddvjac025g7n9h7k2vm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDU2tnBErIsrMQmMykkFSInwLS-WZlFSAU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "969949418855-gjf9a5fuuuppuddvjac025g7n9h7k2vm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
