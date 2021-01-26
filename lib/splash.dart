@@ -1,10 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:parkway/splash.dart';
-import 'package:parkway/login.dart';
-import 'package:parkway/home.dart';
-import 'package:parkway/intro.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -16,6 +12,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
     Timer(Duration(seconds: 5), () => goToLogin(context));
   }
 
@@ -74,8 +71,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       padding: EdgeInsets.only(top: 20.0),
                     ),
                     Text(
-                      "Smart parking... your way!",
-
+                      "Smart parking, your way!",
                       softWrap: true,
                       textAlign: TextAlign.center,
                       style: TextStyle(

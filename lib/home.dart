@@ -1,6 +1,24 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:parkway/login.dart';
+import 'package:parkway/map.dart';
+import 'package:parkway/reserve.dart';
 
-void main() => runApp(HomeScreen());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  getCurrentLocation();
+  runApp(HomeScreen());
+}
+
+void getCurrentLocation() async {
+  final Position position = await Geolocator()
+      .getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high,
+      )
+      .catchError((err) => print(err));
+}
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -21,6 +39,12 @@ class HomeScreen extends StatelessWidget {
 class HomeMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+
+    final User user = auth.currentUser;
+    final name = user.displayName;
+    // here you write the codes to input the data into firestore
+
     return new Stack(
       children: <Widget>[
         Image.asset(
@@ -32,7 +56,7 @@ class HomeMenu extends StatelessWidget {
         Scaffold(
           backgroundColor: Colors.transparent,
           appBar: new AppBar(
-            title: new Text("ParkWay"),
+            title: new Text("Welcome, " + name + "!"),
           ),
           body: Column(
             children: <Widget>[
@@ -77,12 +101,20 @@ class HomeMenu extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
-                            Icon(Icons.map, color: Colors.white,size: 50),
-                            Text('MAP', style: TextStyle(color: Colors.white, fontSize: 20),),
-
+                            Icon(Icons.map, color: Colors.white, size: 50),
+                            Text(
+                              'MAP',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
+                            ),
                           ],
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => MapPage()),
+                          );
+                        },
                       ),
                     ),
                   ),
@@ -97,12 +129,22 @@ class HomeMenu extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
-                            Icon(Icons.map, color: Colors.white,size: 50),
-                            Text('ACCOUNT', style: TextStyle(color: Colors.white, fontSize: 20),),
-
+                            Icon(Icons.book_rounded,
+                                color: Colors.white, size: 50),
+                            Text(
+                              'DASHBOARD',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 19),
+                            ),
                           ],
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ReserveList()),
+                          );
+                        },
                       ),
                     ),
                   ),
@@ -129,9 +171,13 @@ class HomeMenu extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
-                            Icon(Icons.map, color: Colors.white,size: 50),
-                            Text('HISTORY', style: TextStyle(color: Colors.white, fontSize: 20),),
-
+                            Icon(Icons.watch_later_rounded,
+                                color: Colors.white, size: 50),
+                            Text(
+                              'HISTORY',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
+                            ),
                           ],
                         ),
                         onPressed: () {},
@@ -149,12 +195,30 @@ class HomeMenu extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
-                            Icon(Icons.map, color: Colors.white,size: 50),
-                            Text('SIGN OUT', style: TextStyle(color: Colors.white, fontSize: 20),),
-
+                            Icon(Icons.exit_to_app_rounded,
+                                color: Colors.white, size: 50),
+                            Text(
+                              'SIGN OUT',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
+                            ),
                           ],
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          _signOut() async {
+                            await auth.signOut();
+                          }
+
+                          _signOut();
+                          final GoogleSignIn googleSignIn = new GoogleSignIn();
+                          googleSignIn.signOut();
+                          print("User Signed out");
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LoginScreen()),
+                          );
+                        },
                       ),
                     ),
                   ),

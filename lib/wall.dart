@@ -1,19 +1,16 @@
-import 'dart:async';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:parkway/wall.dart';
+import 'package:parkway/intro.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(LoginScreen());
+  runApp(WallScreen());
 }
 
 // ignore: camel_case_types
-class LoginScreen extends StatelessWidget {
+class WallScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
@@ -21,66 +18,19 @@ class LoginScreen extends StatelessWidget {
       title: 'ParkWay',
       theme: new ThemeData(
         fontFamily: 'Raleway',
-        primaryColor: Colors.black, accentColor: Colors.white,
+        primaryColor: Colors.black,
+        accentColor: Colors.white,
       ),
-      home: new loginScreen(),
+      home: new WallBarrierScreen(),
     );
   }
 }
 
-class NavigationService {
-  final GlobalKey<NavigatorState> globalKey = GlobalKey<NavigatorState>();
-
-  Future<dynamic> navigateTo(Route Route) {
-    return globalKey.currentState.push(Route);
-  }
-}
-
-
-class loginScreen extends StatelessWidget {
-  bool finish = false;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final GoogleSignIn googleSignIn = new GoogleSignIn();
-
-  Future<User> _signIn() async {
-    final GoogleSignInAccount account = await googleSignIn.signIn();
-    final GoogleSignInAuthentication authentication =
-        await account.authentication;
-
-    final GoogleAuthCredential credential = GoogleAuthProvider.credential(
-        idToken: authentication.idToken,
-        accessToken: authentication.accessToken);
-
-    final UserCredential authResult =
-        await _auth.signInWithCredential(credential);
-    final User user = authResult.user;
-    print("User Name : ${user.displayName}");
-    String name = user.displayName;
-
-    Timer(Duration(seconds: 15), () => finish = true);
-    return user;
-  }
-
-  void _signOut() {
-    googleSignIn.signOut();
-    print("User Signed out");
-  }
-
-  String inputData() {
-    final User user = _auth.currentUser;
-    final uid = user.uid;
-    return uid;
-  }
-
-  static void goToHome(BuildContext context) {
-    Navigator.pushNamed(context, "/home");
-  }
-
+class WallBarrierScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final FirebaseAuth auth = FirebaseAuth.instance;
     final User user = auth.currentUser;
-
     return new WillPopScope(
       onWillPop: () => showDialog<bool>(
         context: context,
@@ -168,15 +118,11 @@ class loginScreen extends StatelessWidget {
                   ),
                   new RaisedButton.icon(
                     onPressed: () {
-                      _signIn();
                       //if(user != null){
-                      Timer(
-                          Duration(seconds: 2),
-                          () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => WallScreen()),
-                              ));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => IntroScreen()),
+                      );
                       // }
 
                       //Timer(Duration(seconds: 5), () =>
@@ -185,7 +131,7 @@ class loginScreen extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10.0))),
                     label: Text(
-                      'SIGN IN',
+                      'GET STARTED',
                       style: TextStyle(color: Colors.blue),
                     ),
                     icon: Icon(
