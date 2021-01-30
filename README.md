@@ -1,4 +1,4 @@
-# Parkway
+# ParkWay
 
 ParkWay for Studio Project
 
