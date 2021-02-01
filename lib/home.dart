@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:parkway/login.dart';
 import 'package:parkway/map.dart';
 import 'package:parkway/reserve.dart';
@@ -43,7 +44,6 @@ class HomeMenu extends StatelessWidget {
 
     final User user = auth.currentUser;
     final name = user.displayName;
-    // here you write the codes to input the data into firestore
 
     return new Stack(
       children: <Widget>[

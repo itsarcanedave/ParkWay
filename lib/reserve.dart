@@ -6,6 +6,19 @@ import 'package:geolocator/geolocator.dart';
 import 'package:parkway/home.dart';
 import 'package:parkway/login.dart';
 import 'package:parkway/map.dart';
+import 'package:parkway/ctower.dart';
+import 'package:parkway/citywalk.dart';
+import 'package:parkway/gambir.dart';
+import 'package:parkway/grandindo.dart';
+import 'package:parkway/kokas.dart';
+import 'package:parkway/pacific.dart';
+import 'package:parkway/plazaindo.dart';
+import 'package:parkway/plazasemanggi.dart';
+import 'package:parkway/plazasenayan.dart';
+import 'package:parkway/ritz.dart';
+import 'package:parkway/sarinah.dart';
+import 'package:parkway/sency.dart';
+import 'package:parkway/sudirmanplaza.dart';
 
 import 'constants.dart';
 
@@ -157,9 +170,7 @@ class _MyHomePageState extends State<MyHomePage> {
           )),
       onTap: () {
         Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => LoginScreen()),
-        );
+            context, MaterialPageRoute(builder: (context) => CTower()));
       },
     ));
     listItems.add(
@@ -212,7 +223,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => HomeScreen()),
+            MaterialPageRoute(builder: (context) => Citywalk()),
           );
         },
       ),
@@ -268,7 +279,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => HomeScreen()),
+            MaterialPageRoute(builder: (context) => Gambir()),
           );
         },
       ),
@@ -327,7 +338,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => HomeScreen()),
+            MaterialPageRoute(builder: (context) => GrandIndo()),
           );
         },
       ),
@@ -386,7 +397,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => HomeScreen()),
+            MaterialPageRoute(builder: (context) => Kokas()),
           );
         },
       ),
@@ -445,7 +456,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => HomeScreen()),
+            MaterialPageRoute(builder: (context) => Pacific()),
           );
         },
       ),
@@ -504,7 +515,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => HomeScreen()),
+            MaterialPageRoute(builder: (context) => PlazaIndo()),
           );
         },
       ),
@@ -562,7 +573,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => HomeScreen()),
+            MaterialPageRoute(builder: (context) => PlazaSemanggi()),
           );
         },
       ),
@@ -620,7 +631,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => HomeScreen()),
+            MaterialPageRoute(builder: (context) => PlazaSenayan()),
           );
         },
       ),
@@ -678,7 +689,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => HomeScreen()),
+            MaterialPageRoute(builder: (context) => Ritz()),
           );
         },
       ),
@@ -736,7 +747,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => HomeScreen()),
+            MaterialPageRoute(builder: (context) => Sarinah()),
           );
         },
       ),
@@ -794,7 +805,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => HomeScreen()),
+            MaterialPageRoute(builder: (context) => Sency()),
           );
         },
       ),
@@ -853,7 +864,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => HomeScreen()),
+            MaterialPageRoute(builder: (context) => SudirmanPlaza()),
           );
         },
       ),

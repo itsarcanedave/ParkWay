@@ -59,14 +59,13 @@ class _MapPageState extends State<MapPage> {
                 ),
               ),
               actions: <Widget>[
-                //IconButton(
-                //icon: Icon(Icons.gps_fixed_rounded, color: Colors.white),
-                //onPressed: () {
-                //myLocationEnabled: true;
-                //getCurrentLocation();
-
-                //},
-                //),
+                IconButton(
+                  icon: Icon(Icons.gps_fixed_rounded, color: Colors.white),
+                  onPressed: () {
+                    // myLocationEnabled: true;
+                    getCurrentLocation();
+                  },
+                ),
               ],
               title: Text('Available Locations')),
           body: GoogleMap(
