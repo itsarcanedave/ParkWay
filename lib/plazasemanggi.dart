@@ -4,11 +4,35 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:parkway/home.dart';
+import 'package:parkway/plazasemanggires.dart';
 import 'dart:math' show cos, sqrt, asin;
 
-void main() => runApp(PlazaSemanggi());
+class PlazaSemanggi extends StatefulWidget {
+  @override
+  PlazaSemanggiState createState() {
+    return new PlazaSemanggiState();
+  }
+}
 
-class PlazaSemanggi extends StatelessWidget {
+String place = "Plaza Semanggi";
+
+class PlazaSemanggiState extends State<PlazaSemanggi> {
+  final DocumentReference placeReference =
+      FirebaseFirestore.instance.doc("Places" + "/" + place);
+  var dummyparking;
+  var dummyvalet;
+
+  void _getBalance() {
+    placeReference.get().then((datasnapshot) {
+      if (datasnapshot.exists) {
+        setState(() {
+          dummyparking = datasnapshot.data()['space'];
+          dummyvalet = datasnapshot.data()['quota'];
+        });
+      }
+    });
+  }
+
   void getPostsData() async {
     final Position position = await Geolocator()
         .getCurrentPosition(
@@ -32,9 +56,18 @@ class PlazaSemanggi extends StatelessWidget {
   }
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    var dummyparking = 570;
-    var dummyvalet = 210;
+    _getBalance();
     return new Scaffold(
       appBar: AppBar(
         title: Text("Plaza Semanggi"),
@@ -123,6 +156,7 @@ class PlazaSemanggi extends StatelessWidget {
                         ),
                       ),
                       child: new TextField(
+                        enabled: false,
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.blue,
@@ -149,6 +183,7 @@ class PlazaSemanggi extends StatelessWidget {
                         ),
                       ),
                       child: new TextField(
+                        enabled: false,
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.blue,
@@ -176,16 +211,16 @@ class PlazaSemanggi extends StatelessWidget {
                       onPressed: () {
                         // _signIn();
                         //if(user != null){
-                        // Navigator.push(
-                        //      context,
-                        //      MaterialPageRoute(
-                        //         builder: (context) => WallScreen()),
-                        //    );
-                        // }
-
-                        //Timer(Duration(seconds: 5), () =>
-                        //);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => PlazaSemanggiRes()),
+                        );
                       },
+
+                      //Timer(Duration(seconds: 5), () =>
+                      //);
+                      //},
                       shape: RoundedRectangleBorder(
                           borderRadius:
                               BorderRadius.all(Radius.circular(10.0))),

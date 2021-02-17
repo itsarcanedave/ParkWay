@@ -4,11 +4,35 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:parkway/home.dart';
+import 'package:parkway/plazaindores.dart';
 import 'dart:math' show cos, sqrt, asin;
 
-void main() => runApp(PlazaIndo());
+class PlazaIndo extends StatefulWidget {
+  @override
+  PlazaIndoState createState() {
+    return new PlazaIndoState();
+  }
+}
 
-class PlazaIndo extends StatelessWidget {
+String place = "Plaza Indonesia";
+
+class PlazaIndoState extends State<PlazaIndo> {
+  final DocumentReference placeReference =
+      FirebaseFirestore.instance.doc("Places" + "/" + place);
+  var dummyparking;
+  var dummyvalet;
+
+  void _getBalance() {
+    placeReference.get().then((datasnapshot) {
+      if (datasnapshot.exists) {
+        setState(() {
+          dummyparking = datasnapshot.data()['space'];
+          dummyvalet = datasnapshot.data()['quota'];
+        });
+      }
+    });
+  }
+
   void getPostsData() async {
     final Position position = await Geolocator()
         .getCurrentPosition(
@@ -32,9 +56,18 @@ class PlazaIndo extends StatelessWidget {
   }
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    var dummyparking = 570;
-    var dummyvalet = 210;
+    _getBalance();
     return new Scaffold(
       appBar: AppBar(
         title: Text("Plaza Indonesia"),
@@ -123,6 +156,7 @@ class PlazaIndo extends StatelessWidget {
                         ),
                       ),
                       child: new TextField(
+                        enabled: false,
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.blue,
@@ -149,6 +183,7 @@ class PlazaIndo extends StatelessWidget {
                         ),
                       ),
                       child: new TextField(
+                        enabled: false,
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.blue,
@@ -176,16 +211,16 @@ class PlazaIndo extends StatelessWidget {
                       onPressed: () {
                         // _signIn();
                         //if(user != null){
-                        // Navigator.push(
-                        //      context,
-                        //      MaterialPageRoute(
-                        //         builder: (context) => WallScreen()),
-                        //    );
-                        // }
-
-                        //Timer(Duration(seconds: 5), () =>
-                        //);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => PlazaIndoRes()),
+                        );
                       },
+
+                      //Timer(Duration(seconds: 5), () =>
+                      //);
+                      //},
                       shape: RoundedRectangleBorder(
                           borderRadius:
                               BorderRadius.all(Radius.circular(10.0))),

@@ -1,5 +1,6 @@
 import 'dart:math' show cos, sqrt, asin;
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -19,10 +20,15 @@ import 'package:parkway/ritz.dart';
 import 'package:parkway/sarinah.dart';
 import 'package:parkway/sency.dart';
 import 'package:parkway/sudirmanplaza.dart';
+import 'package:parkway/payment.dart';
+import 'package:parkway/history.dart';
 
 import 'constants.dart';
 
 double earthRadius = 6371000;
+final FirebaseAuth auth = FirebaseAuth.instance;
+final User user = auth.currentUser;
+final name = user.displayName;
 
 void main() {
   runApp(ReserveList());
@@ -44,6 +50,35 @@ class ReserveList extends StatelessWidget {
   }
 }
 
+String citytower = "City Tower Sudirman";
+var cityTowerPrice;
+String citywalk = "Citywalk Sudirman";
+var citywalkPrice;
+String gambir = "Gambir Station";
+var gambirPrice;
+String grandindonesia = "Grand Indonesia";
+var grandindonesiaPrice;
+String kotakasablanka = "Kota Kasablanka";
+var kotakasablankaPrice;
+String pacificplace = "Pacific Place";
+var pacificplacePrice;
+String plazaindonesia = "Plaza Indonesia";
+var plazaindonesiaPrice;
+String plazasemanggi = "Plaza Semanggi";
+var plazasemanggiPrice;
+String plazasenayan = "Plaza Senayan";
+var plazasenayanPrice;
+String ritzcarlton = "Ritz-Carlton";
+var ritzcarltonPrice;
+String sarinah = "Sarinah";
+var sarinahPrice;
+String senayancity = "Senayan City";
+var senayancityPrice;
+String sudirmanplaza = "Sudirman Plaza";
+var sudirmanplazaPrice;
+
+var points;
+
 class MyHomePage extends StatefulWidget {
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -54,6 +89,162 @@ class _MyHomePageState extends State<MyHomePage> {
   ScrollController controller = ScrollController();
   bool closeTopContainer = false;
   double topContainer = 0;
+
+  final DocumentReference documentReference =
+      FirebaseFirestore.instance.doc("Users" + "/" + name);
+
+  final DocumentReference cityTowerReference =
+      FirebaseFirestore.instance.doc("Places" + "/" + citytower);
+  final DocumentReference citywalkReference =
+      FirebaseFirestore.instance.doc("Places" + "/" + citywalk);
+  final DocumentReference gambirReference =
+      FirebaseFirestore.instance.doc("Places" + "/" + gambir);
+  final DocumentReference grandindonesiaReference =
+      FirebaseFirestore.instance.doc("Places" + "/" + grandindonesia);
+  final DocumentReference kotakasablankaReference =
+      FirebaseFirestore.instance.doc("Places" + "/" + kotakasablanka);
+  final DocumentReference pacificplaceReference =
+      FirebaseFirestore.instance.doc("Places" + "/" + pacificplace);
+  final DocumentReference plazaindonesiaReference =
+      FirebaseFirestore.instance.doc("Places" + "/" + plazaindonesia);
+  final DocumentReference plazasemanggiReference =
+      FirebaseFirestore.instance.doc("Places" + "/" + plazasemanggi);
+  final DocumentReference plazasenayanReference =
+      FirebaseFirestore.instance.doc("Places" + "/" + plazasenayan);
+  final DocumentReference ritzcarltonReference =
+      FirebaseFirestore.instance.doc("Places" + "/" + ritzcarlton);
+  final DocumentReference sarinahReference =
+      FirebaseFirestore.instance.doc("Places" + "/" + sarinah);
+  final DocumentReference senayancityReference =
+      FirebaseFirestore.instance.doc("Places" + "/" + senayancity);
+  final DocumentReference sudirmanplazaReference =
+      FirebaseFirestore.instance.doc("Places" + "/" + sudirmanplaza);
+
+  void getBalanceHere() {
+    documentReference.get().then((datasnapshot) {
+      if (datasnapshot.exists) {
+        setState(() {
+          points = datasnapshot.data()['points'];
+        });
+      }
+      if (datasnapshot.exists == false) {
+        Map<String, num> data = <String, num>{
+          "balance": 0,
+          "points": 0,
+          "cardnumber": 0,
+        };
+        documentReference.setData(data);
+        setState(() {
+          balance = datasnapshot.data()['balance'];
+          card = datasnapshot.data()['cardnumber'];
+        });
+      }
+    });
+
+    cityTowerReference.get().then((datasnapshot) {
+      if (datasnapshot.exists) {
+        setState(() {
+          cityTowerPrice = datasnapshot.data()['price'];
+        });
+      }
+    });
+
+    citywalkReference.get().then((datasnapshot) {
+      if (datasnapshot.exists) {
+        setState(() {
+          citywalkPrice = datasnapshot.data()['price'];
+        });
+      }
+    });
+
+    gambirReference.get().then((datasnapshot) {
+      if (datasnapshot.exists) {
+        setState(() {
+          gambirPrice = datasnapshot.data()['price'];
+        });
+      }
+    });
+
+    grandindonesiaReference.get().then((datasnapshot) {
+      if (datasnapshot.exists) {
+        setState(() {
+          grandindonesiaPrice = datasnapshot.data()['price'];
+        });
+      }
+    });
+
+    kotakasablankaReference.get().then((datasnapshot) {
+      if (datasnapshot.exists) {
+        setState(() {
+          kotakasablankaPrice = datasnapshot.data()['price'];
+        });
+      }
+    });
+
+    pacificplaceReference.get().then((datasnapshot) {
+      if (datasnapshot.exists) {
+        setState(() {
+          pacificplacePrice = datasnapshot.data()['price'];
+        });
+      }
+    });
+
+    plazaindonesiaReference.get().then((datasnapshot) {
+      if (datasnapshot.exists) {
+        setState(() {
+          plazaindonesiaPrice = datasnapshot.data()['price'];
+        });
+      }
+    });
+
+    plazasemanggiReference.get().then((datasnapshot) {
+      if (datasnapshot.exists) {
+        setState(() {
+          plazasemanggiPrice = datasnapshot.data()['price'];
+        });
+      }
+    });
+
+    plazasenayanReference.get().then((datasnapshot) {
+      if (datasnapshot.exists) {
+        setState(() {
+          plazasenayanPrice = datasnapshot.data()['price'];
+        });
+      }
+    });
+
+    ritzcarltonReference.get().then((datasnapshot) {
+      if (datasnapshot.exists) {
+        setState(() {
+          ritzcarltonPrice = datasnapshot.data()['price'];
+        });
+      }
+    });
+
+    sarinahReference.get().then((datasnapshot) {
+      if (datasnapshot.exists) {
+        setState(() {
+          sarinahPrice = datasnapshot.data()['price'];
+        });
+      }
+    });
+
+    senayancityReference.get().then((datasnapshot) {
+      if (datasnapshot.exists) {
+        setState(() {
+          senayancityPrice = datasnapshot.data()['price'];
+        });
+      }
+    });
+
+    sudirmanplazaReference.get().then((datasnapshot) {
+      if (datasnapshot.exists) {
+        setState(() {
+          sudirmanplazaPrice = datasnapshot.data()['price'];
+        });
+      }
+    });
+  }
 
   List<Widget> itemsData = [];
 
@@ -141,7 +332,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      "City Tower Sudirman",
+                      citytower,
                       style: const TextStyle(
                           fontSize: 23, fontWeight: FontWeight.bold),
                     ),
@@ -153,7 +344,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       height: 10,
                     ),
                     Text(
-                      sudirmanPrice,
+                      "Rp. " + cityTowerPrice.toString(),
                       style: const TextStyle(
                           fontSize: 23,
                           color: Colors.black,
@@ -208,7 +399,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         height: 10,
                       ),
                       Text(
-                        sudirmanPrice,
+                        "Rp. " + citywalkPrice.toString(),
                         style: const TextStyle(
                             fontSize: 23,
                             color: Colors.black,
@@ -264,7 +455,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         height: 10,
                       ),
                       Text(
-                        otherPrice,
+                        "Rp. " + gambirPrice.toString(),
                         style: const TextStyle(
                             fontSize: 23,
                             color: Colors.black,
@@ -320,7 +511,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         height: 10,
                       ),
                       Text(
-                        thamrinPrice,
+                        "Rp. " + grandindonesiaPrice.toString(),
                         style: const TextStyle(
                             fontSize: 23,
                             color: Colors.black,
@@ -379,7 +570,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         height: 10,
                       ),
                       Text(
-                        otherPrice,
+                        "Rp. " + kotakasablankaPrice.toString(),
                         style: const TextStyle(
                             fontSize: 23,
                             color: Colors.black,
@@ -438,7 +629,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         height: 10,
                       ),
                       Text(
-                        sudirmanPrice,
+                        "Rp. " + pacificplacePrice.toString(),
                         style: const TextStyle(
                             fontSize: 23,
                             color: Colors.black,
@@ -497,7 +688,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         height: 10,
                       ),
                       Text(
-                        thamrinPrice,
+                        "Rp. " + plazaindonesiaPrice.toString(),
                         style: const TextStyle(
                             fontSize: 23,
                             color: Colors.black,
@@ -555,7 +746,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         height: 10,
                       ),
                       Text(
-                        sudirmanPrice,
+                        "Rp. " + plazasemanggiPrice.toString(),
                         style: const TextStyle(
                             fontSize: 23,
                             color: Colors.black,
@@ -613,7 +804,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         height: 10,
                       ),
                       Text(
-                        sudirmanPrice,
+                        "Rp. " + plazasenayanPrice.toString(),
                         style: const TextStyle(
                             fontSize: 23,
                             color: Colors.black,
@@ -671,7 +862,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         height: 10,
                       ),
                       Text(
-                        kuninganPrice,
+                        "Rp. " + ritzcarltonPrice.toString(),
                         style: const TextStyle(
                             fontSize: 23,
                             color: Colors.black,
@@ -729,7 +920,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         height: 10,
                       ),
                       Text(
-                        thamrinPrice,
+                        "Rp. " + sarinahPrice.toString(),
                         style: const TextStyle(
                             fontSize: 23,
                             color: Colors.black,
@@ -787,7 +978,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         height: 10,
                       ),
                       Text(
-                        sudirmanPrice,
+                        "Rp. " + senayancityPrice.toString(),
                         style: const TextStyle(
                             fontSize: 23,
                             color: Colors.black,
@@ -846,7 +1037,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         height: 10,
                       ),
                       Text(
-                        sudirmanPrice,
+                        "Rp. " + sudirmanplazaPrice.toString(),
                         style: const TextStyle(
                             fontSize: 23,
                             color: Colors.black,
@@ -879,7 +1070,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     getPostsData();
-
+    getBalanceHere();
     controller.addListener(() {
       double value = controller.offset / 119;
 
@@ -892,6 +1083,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    if (points == null) {
+      points = 0;
+    }
     final Size size = MediaQuery.of(context).size;
     final double categoryHeight = size.height * 0.30;
     return SafeArea(
@@ -911,12 +1105,22 @@ class _MyHomePageState extends State<MyHomePage> {
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.watch_later_rounded, color: Colors.white),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => History()),
+                );
+              },
             ),
             IconButton(
               icon: Icon(Icons.account_balance_wallet_rounded,
                   color: Colors.white),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Payment()),
+                );
+              },
             )
           ],
         ),
@@ -1026,7 +1230,7 @@ class CategoriesScroller extends StatelessWidget {
                           height: 10,
                         ),
                         Text(
-                          "2134 Points",
+                          points.toStringAsFixed(0) + " points",
                           style: TextStyle(fontSize: 16, color: Colors.white),
                         ),
                       ],

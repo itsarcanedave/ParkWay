@@ -6,10 +6,17 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:parkway/login.dart';
 import 'package:parkway/map.dart';
 import 'package:parkway/reserve.dart';
+import 'package:parkway/history.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+final FirebaseAuth auth = FirebaseAuth.instance;
+final User user = auth.currentUser;
+final name = user.displayName;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   getCurrentLocation();
+  _getBalance();
   runApp(HomeScreen());
 }
 
@@ -20,6 +27,14 @@ void getCurrentLocation() async {
       )
       .catchError((err) => print(err));
 }
+
+final DocumentReference documentReference =
+    FirebaseFirestore.instance.doc("Users" + "/" + name);
+
+final DocumentReference historyReference = FirebaseFirestore.instance
+    .doc("Users" + "/" + name + "/" + "Bookings" + "/" + "latest");
+var balance;
+var card;
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -35,6 +50,28 @@ class HomeScreen extends StatelessWidget {
       home: new HomeMenu(),
     );
   }
+}
+
+void _getBalance() {
+  documentReference.get().then((datasnapshot) {
+    if (datasnapshot.exists) {
+      //  setState(() {
+      //      balance = datasnapshot.data()['balance'];
+      //      card = datasnapshot.data()['cardnumber'];
+      //    });
+    }
+    if (datasnapshot.exists == false) {
+      Map<String, num> data = <String, num>{
+        "balance": 0,
+        "cardnumber": 0,
+      };
+      documentReference.setData(data);
+      //  setState(() {
+      ///   balance = datasnapshot.data()['balance'];
+      //     card = datasnapshot.data()['cardnumber'];
+      //   });
+    }
+  });
 }
 
 class HomeMenu extends StatelessWidget {
@@ -89,10 +126,8 @@ class HomeMenu extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   ClipRRect(
-
                     borderRadius: BorderRadius.circular(120),
                     child: SizedBox(
-
                       width: 150,
                       height: 150,
                       child: RaisedButton(
@@ -174,13 +209,18 @@ class HomeMenu extends StatelessWidget {
                             Icon(Icons.watch_later_rounded,
                                 color: Colors.white, size: 50),
                             Text(
-                              'HISTORY',
+                              'ONGOING',
                               style:
                                   TextStyle(color: Colors.white, fontSize: 20),
                             ),
                           ],
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => History()),
+                          );
+                        },
                       ),
                     ),
                   ),
@@ -205,11 +245,14 @@ class HomeMenu extends StatelessWidget {
                           ],
                         ),
                         onPressed: () {
+                          final _firestore = FirebaseFirestore.instance;
+                          _firestore.clearPersistence();
                           _signOut() async {
                             await auth.signOut();
                           }
 
                           _signOut();
+
                           final GoogleSignIn googleSignIn = new GoogleSignIn();
                           googleSignIn.signOut();
                           print("User Signed out");
