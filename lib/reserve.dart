@@ -22,6 +22,8 @@ import 'package:parkway/sency.dart';
 import 'package:parkway/sudirmanplaza.dart';
 import 'package:parkway/payment.dart';
 import 'package:parkway/history.dart';
+import 'package:parkway/search.dart';
+import 'package:parkway/membership.dart';
 
 import 'constants.dart';
 
@@ -120,7 +122,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final DocumentReference sudirmanplazaReference =
       FirebaseFirestore.instance.doc("Places" + "/" + sudirmanplaza);
 
-  void getBalanceHere() {
+  Future<void> getBalanceHere() async {
     documentReference.get().then((datasnapshot) {
       if (datasnapshot.exists) {
         setState(() {
@@ -137,6 +139,7 @@ class _MyHomePageState extends State<MyHomePage> {
         setState(() {
           balance = datasnapshot.data()['balance'];
           card = datasnapshot.data()['cardnumber'];
+          points = datasnapshot.data()['points'];
         });
       }
     });
@@ -247,6 +250,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   List<Widget> itemsData = [];
+  List<Widget> listItems = [];
 
   void getPostsData() async {
     final Position position = await Geolocator()
@@ -310,9 +314,10 @@ class _MyHomePageState extends State<MyHomePage> {
     String kuninganPrice = "Rp. 8.000";
     String otherPrice = "Rp. 5.000";
     List<String> dashList = LOC_DATA;
-    List<Widget> listItems = [];
+
     final locMap = dashList.asMap();
     final nameOne = locMap[1];
+
     listItems.add(InkWell(
       child: Container(
           height: 150,
@@ -1081,14 +1086,38 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  Future refreshData() async {
+    setState(() {
+      itemsData = listItems;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (cityTowerPrice == null ||
+        citywalkPrice == null ||
+        gambirPrice == null ||
+        grandindonesiaPrice == null ||
+        kotakasablankaPrice == null ||
+        pacificplacePrice == null ||
+        plazaindonesiaPrice == null ||
+        plazasemanggiPrice == null) {
+      cityTowerPrice = "Loading...";
+      citywalkPrice = "Loading...";
+      gambirPrice = "Loading...";
+      grandindonesiaPrice = "Loading...";
+      kotakasablankaPrice = "Loading...";
+      pacificplacePrice = "Loading...";
+      plazaindonesiaPrice = "Loading...";
+      plazasemanggiPrice = "Loading...";
+    }
     if (points == null) {
       points = 0;
     }
     final Size size = MediaQuery.of(context).size;
     final double categoryHeight = size.height * 0.30;
-    return SafeArea(
+    return RefreshIndicator(
+      onRefresh: refreshData,
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -1100,7 +1129,7 @@ class _MyHomePageState extends State<MyHomePage> {
             onPressed: () => Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => MapPage()),
-            ),
+                ),
           ),
           actions: <Widget>[
             IconButton(
@@ -1121,7 +1150,16 @@ class _MyHomePageState extends State<MyHomePage> {
                   MaterialPageRoute(builder: (context) => Payment()),
                 );
               },
-            )
+            ),
+            IconButton(
+              icon: Icon(Icons.search_rounded, color: Colors.white),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Search()),
+                );
+              },
+            ),
           ],
         ),
         body: Container(
@@ -1230,7 +1268,8 @@ class CategoriesScroller extends StatelessWidget {
                           height: 10,
                         ),
                         Text(
-                          points.toStringAsFixed(0) + " points",
+                          "View points",
+                          //points.toStringAsFixed(0) + " points",
                           style: TextStyle(fontSize: 16, color: Colors.white),
                         ),
                       ],
@@ -1238,7 +1277,8 @@ class CategoriesScroller extends StatelessWidget {
                   ),
                 ),
                 onTap: () {
-                  print("tapped on container");
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Membership()));
                 },
               ),
               Container(

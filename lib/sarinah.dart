@@ -87,7 +87,7 @@ class SarinahState extends State<Sarinah> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     Image.asset(
                       "assets/sarinah.png",

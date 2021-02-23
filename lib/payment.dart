@@ -82,6 +82,9 @@ class PaymentState extends State<Payment> {
 
   @override
   Widget build(BuildContext context) {
+    if (balance == null) {
+      balance = 0;
+    }
     String tempCard;
     if (card == 0) {
       tempCard = "No Card";

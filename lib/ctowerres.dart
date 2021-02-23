@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:parkway/cttowerloc.dart';
+import 'package:flutter/services.dart';
 
 class CTowerRes extends StatefulWidget {
   @override
@@ -155,6 +156,7 @@ class CTowerResState extends State<CTowerRes> {
 
   @override
   void initState() {
+    //SystemChrome.setEnabledSystemUIOverlays ([SystemUiOverlay.top]);
     _getBalance();
     super.initState();
     subscription = documentReference.snapshots().listen((datasnapshot) {
@@ -177,17 +179,19 @@ class CTowerResState extends State<CTowerRes> {
     if (total == null) {
       total = 0;
     }
-    return new Scaffold(
-        key: scaffoldKey,
-        appBar: new AppBar(
-          title: new Text("Reservation"),
-        ),
-        body: new Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: SingleChildScrollView(
-              child: new Form(
-                key: formKey,
-                child: new Column(
+    return new WillPopScope(
+        onWillPop: () async => false,
+        child: new Scaffold(
+            key: scaffoldKey,
+            appBar: new AppBar(
+              title: new Text("Reservation"),
+            ),
+            body: new Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: SingleChildScrollView(
+                  child: new Form(
+                    key: formKey,
+                    child: new Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     new TextField(
@@ -318,8 +322,8 @@ class CTowerResState extends State<CTowerRes> {
                       color: Colors.blue,
                     ),
                   ],
-                ),
-              ),
-            )));
+                    ),
+                  ),
+                ))));
   }
 }
