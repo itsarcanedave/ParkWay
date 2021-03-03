@@ -1,7 +1,8 @@
 import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:parkway/history.dart';
 
@@ -99,13 +100,14 @@ class CancelState extends State<Cancel> {
 
   void _update() {
     final DocumentReference placeReference =
-    FirebaseFirestore.instance.doc("Places" + "/" + uplace);
+        FirebaseFirestore.instance.doc("Places" + "/" + uplace);
     //placeReference
     //   .update({"balance": FieldValue.increment(total*-1)});
-    placeReference
-        .update({"payments": FieldValue.increment(uprice * -1)});
-    placeReference
-        .update({"payments": FieldValue.increment(uprice / 2)});
+    placeReference.update({"payments": FieldValue.increment(uprice * -1)});
+    placeReference.update({"payments": FieldValue.increment(uprice / 2)});
+    final DocumentReference valetReference =
+        FirebaseFirestore.instance.doc("Valet" + "/" + uplace);
+    valetReference.update({"$name": FieldValue.delete()});
     bookingReference.delete();
   }
 

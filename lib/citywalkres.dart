@@ -43,6 +43,9 @@ class CitywalkResState extends State<CitywalkRes> {
   final DocumentReference bookingReference = FirebaseFirestore.instance
       .doc("Users" + "/" + name + "/" + "Bookings" + "/" + "latest");
 
+  final DocumentReference valetReference =
+      FirebaseFirestore.instance.doc("Valet" + "/" + place);
+
   bool finish = false;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn googleSignIn = new GoogleSignIn();
@@ -82,6 +85,11 @@ class CitywalkResState extends State<CitywalkRes> {
         });
       }
     });
+
+    if (isSwitched == true) {
+      placeReference.update({"quota": FieldValue.increment(1 * -1)});
+      valetReference.update({"$name": hours.toString()});
+    }
   }
 
   void _getBalance() {

@@ -1,11 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'dart:async';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:parkway/home.dart';
-import 'package:parkway/gambirres.dart';
 import 'dart:math' show cos, sqrt, asin;
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:parkway/gambirres.dart';
+import 'package:parkway/home.dart';
 
 class Gambir extends StatefulWidget {
   @override
@@ -21,6 +20,9 @@ class GambirState extends State<Gambir> {
       FirebaseFirestore.instance.doc("Places" + "/" + place);
   var dummyparking;
   var dummyvalet;
+  String service1;
+  String service2;
+  String service3;
 
   void _getBalance() {
     placeReference.get().then((datasnapshot) {
@@ -28,6 +30,9 @@ class GambirState extends State<Gambir> {
         setState(() {
           dummyparking = datasnapshot.data()['space'];
           dummyvalet = datasnapshot.data()['quota'];
+          service1 = datasnapshot.data()['service1'];
+          service2 = datasnapshot.data()['service2'];
+          service3 = datasnapshot.data()['service3'];
         });
       }
     });
@@ -36,8 +41,8 @@ class GambirState extends State<Gambir> {
   void getPostsData() async {
     final Position position = await Geolocator()
         .getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high,
-        )
+      desiredAccuracy: LocationAccuracy.high,
+    )
         .catchError((err) => print(err));
     var currPos = position;
     getCurrentLocation();
@@ -162,7 +167,7 @@ class GambirState extends State<Gambir> {
                           fillColor: Colors.blue,
                           enabledBorder: OutlineInputBorder(
                             borderSide:
-                                BorderSide(color: Colors.blue, width: 5.0),
+                            BorderSide(color: Colors.blue, width: 5.0),
                           ),
                           hintText: dummyparking.toString(),
                           hintStyle: TextStyle(
@@ -189,7 +194,7 @@ class GambirState extends State<Gambir> {
                           fillColor: Colors.blue,
                           enabledBorder: OutlineInputBorder(
                             borderSide:
-                                BorderSide(color: Colors.blue, width: 5.0),
+                            BorderSide(color: Colors.blue, width: 5.0),
                           ),
                           hintText: dummyvalet.toString(),
                           hintStyle: TextStyle(
@@ -201,11 +206,37 @@ class GambirState extends State<Gambir> {
                         ),
                       ),
                     ),
-                    FlatButton(
-                      child: Text(
-                        "",
+                    new Padding(
+                      padding: const EdgeInsets.only(top: 20.0),
+                    ),
+
+                    new TextField(
+                      maxLines: null,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.deepOrangeAccent,
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Colors.deepOrangeAccent, width: 5.0),
+                        ),
+                        hintText: "Facilities and Amenities:" +
+                            "\n" +
+                            "\n" +
+                            service1 +
+                            "\n" +
+                            service2 +
+                            "\n" +
+                            service3,
+                        hintStyle: TextStyle(
+                            fontSize: 20.0,
+                            color: Colors.white,
+                            fontFamily: 'Raleway'),
+                        //  prefixIcon: Icon(Icons.shopping_cart_rounded,
+                        //     size: 40, color: Colors.white),
                       ),
-                      onPressed: () {},
+                    ),
+                    new Padding(
+                      padding: const EdgeInsets.only(top: 20.0),
                     ),
                     new RaisedButton.icon(
                       onPressed: () {
@@ -222,7 +253,7 @@ class GambirState extends State<Gambir> {
                       //},
                       shape: RoundedRectangleBorder(
                           borderRadius:
-                              BorderRadius.all(Radius.circular(10.0))),
+                          BorderRadius.all(Radius.circular(10.0))),
                       label: Text(
                         'RESERVE',
                         style: TextStyle(color: Colors.blue, fontSize: 18),

@@ -1,7 +1,8 @@
 import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:parkway/history.dart';
 
@@ -108,6 +109,15 @@ class ModifyState extends State<Modify> {
           uplace = datasnapshot.data()['place'];
           uprice = int.parse(datasnapshot.data()['price']);
           uvalet = datasnapshot.data()['valet'];
+          if (uvalet == "Yes") {
+            uvalet = "requested";
+            //isSwitched = true;
+
+          } else {
+            uvalet = "not requested";
+            //isSwitched = false;
+
+          }
         });
       }
       if (datasnapshot.exists == false) {
@@ -207,15 +217,7 @@ class ModifyState extends State<Modify> {
       valet = " ";
     }
 
-    if (uvalet == "Yes") {
-      uvalet = "requested";
-      //isSwitched = true;
 
-    } else {
-      uvalet = "not requested";
-      //isSwitched = false;
-
-    }
 
     if (total == null) {
       total = 0;

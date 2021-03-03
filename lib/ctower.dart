@@ -19,6 +19,9 @@ class CTowerState extends State<CTower> {
       FirebaseFirestore.instance.doc("Places" + "/" + place);
   var dummyparking;
   var dummyvalet;
+  String service1;
+  String service2;
+  String service3;
 
   void _getBalance() {
     placeReference.get().then((datasnapshot) {
@@ -26,6 +29,9 @@ class CTowerState extends State<CTower> {
         setState(() {
           dummyparking = datasnapshot.data()['space'];
           dummyvalet = datasnapshot.data()['quota'];
+          service1 = datasnapshot.data()['service1'];
+          service2 = datasnapshot.data()['service2'];
+          service3 = datasnapshot.data()['service3'];
         });
       }
     });
@@ -199,11 +205,38 @@ class CTowerState extends State<CTower> {
                         ),
                       ),
                     ),
-                    FlatButton(
-                      child: Text(
-                        "",
+
+                    new Padding(
+                      padding: const EdgeInsets.only(top: 20.0),
+                    ),
+
+                    new TextField(
+                      maxLines: null,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.deepOrangeAccent,
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Colors.deepOrangeAccent, width: 5.0),
+                        ),
+                        hintText: "Facilities and Amenities:" +
+                            "\n" +
+                            "\n" +
+                            service1 +
+                            "\n" +
+                            service2 +
+                            "\n" +
+                            service3,
+                        hintStyle: TextStyle(
+                            fontSize: 20.0,
+                            color: Colors.white,
+                            fontFamily: 'Raleway'),
+                        //  prefixIcon: Icon(Icons.shopping_cart_rounded,
+                        //     size: 40, color: Colors.white),
                       ),
-                      onPressed: () {},
+                    ),
+                    new Padding(
+                      padding: const EdgeInsets.only(top: 20.0),
                     ),
                     new RaisedButton.icon(
                       onPressed: () {

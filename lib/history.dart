@@ -1,12 +1,25 @@
 import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:parkway/modify.dart';
 import 'package:parkway/cancel.dart';
+import 'package:parkway/citywalkloc.dart';
+import 'package:parkway/cttowerloc.dart';
+import 'package:parkway/gambirloc.dart';
+import 'package:parkway/grandindoloc.dart';
 import 'package:parkway/home.dart';
-import 'package:parkway/nohistory.dart';
+import 'package:parkway/kokasloc.dart';
+import 'package:parkway/modify.dart';
+import 'package:parkway/pacificloc.dart';
+import 'package:parkway/plazaindoloc.dart';
+import 'package:parkway/plazasemanggiloc.dart';
+import 'package:parkway/plazasenayanloc.dart';
+import 'package:parkway/ritzloc.dart';
+import 'package:parkway/sarinahloc.dart';
+import 'package:parkway/sencyloc.dart';
+import 'package:parkway/sudirmanplazaloc.dart';
 
 class History extends StatefulWidget {
   @override
@@ -112,6 +125,71 @@ class HistoryState extends State<History> {
     _boolcheckmap() {
       if (place == "No reservations") {
         return null;
+      } else if (place == "City Tower Sudirman") {
+        return (() => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => CTowerLoc()),
+            ));
+      } else if (place == "Citywalk Sudirman") {
+        return (() => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => CitywalkLoc()),
+            ));
+      } else if (place == "Gambir Station") {
+        return (() => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => GambirLoc()),
+            ));
+      } else if (place == "Grand Indonesia") {
+        return (() => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => GrandIndoLoc()),
+            ));
+      } else if (place == "Kota Kasablanka") {
+        return (() => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => KokasLoc()),
+            ));
+      } else if (place == "Pacific Place") {
+        return (() => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => PacificLoc()),
+            ));
+      } else if (place == "Plaza Indonesia") {
+        return (() => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => PlazaIndoLoc()),
+            ));
+      } else if (place == "Plaza Semanggi") {
+        return (() => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => PlazaSemanggiLoc()),
+            ));
+      } else if (place == "Plaza Senayan") {
+        return (() => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => PlazaSenayanLoc()),
+            ));
+      } else if (place == "Ritz-Carlton") {
+        return (() => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => RitzLoc()),
+            ));
+      } else if (place == "Sarinah") {
+        return (() => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SarinahLoc()),
+            ));
+      } else if (place == "Senayan City") {
+        return (() => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SencyLoc()),
+            ));
+      } else if (place == "Sudirman Plaza") {
+        return (() => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SudirmanPlazaLoc()),
+            ));
       }
     }
 

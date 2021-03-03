@@ -12,7 +12,6 @@ import 'package:parkway/grandindo.dart';
 import 'package:parkway/history.dart';
 import 'package:parkway/home.dart';
 import 'package:parkway/kokas.dart';
-import 'package:parkway/map.dart';
 import 'package:parkway/membership.dart';
 import 'package:parkway/pacific.dart';
 import 'package:parkway/payment.dart';
@@ -20,12 +19,12 @@ import 'package:parkway/plazaindo.dart';
 import 'package:parkway/plazasemanggi.dart';
 import 'package:parkway/plazasenayan.dart';
 import 'package:parkway/promotions.dart';
+import 'package:parkway/reserve.dart';
 import 'package:parkway/ritz.dart';
 import 'package:parkway/sarinah.dart';
 import 'package:parkway/search.dart';
 import 'package:parkway/sency.dart';
 import 'package:parkway/sudirmanplaza.dart';
-import 'package:parkway/vouchers.dart';
 
 import 'constants.dart';
 
@@ -35,10 +34,10 @@ final User user = auth.currentUser;
 final name = user.displayName;
 
 void main() {
-  runApp(ReserveList());
+  runApp(Vouchers());
 }
 
-class ReserveList extends StatelessWidget {
+class Vouchers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -54,6 +53,20 @@ class ReserveList extends StatelessWidget {
   }
 }
 
+String cityTowerText;
+String citywalkText;
+String gambirText;
+String grandIndoText;
+String kokasText;
+String pacificText;
+String plazaIndoText;
+String plazaSemanggiText;
+String plazaSenayanText;
+String ritzText;
+String sarinahText;
+String sencyText;
+String sudirmanPlazaText;
+final scaffoldKey = new GlobalKey<ScaffoldState>();
 String citytower = "City Tower Sudirman";
 var cityTowerPrice;
 String citywalk = "Citywalk Sudirman";
@@ -123,6 +136,141 @@ class _MyHomePageState extends State<MyHomePage> {
       FirebaseFirestore.instance.doc("Places" + "/" + senayancity);
   final DocumentReference sudirmanplazaReference =
       FirebaseFirestore.instance.doc("Places" + "/" + sudirmanplaza);
+
+  void _getBalance() {
+    documentReference.get().then((datasnapshot) {
+      if (datasnapshot.exists) {
+        setState(() {
+          balance = datasnapshot.data()['balance'];
+          card = datasnapshot.data()['cardnumber'];
+          points = datasnapshot.data()['points'];
+        });
+      }
+      if (datasnapshot.exists == false) {
+        Map<String, num> data = <String, num>{
+          "balance": 0,
+          "points": 0,
+          "cardnumber": 0,
+        };
+        documentReference.setData(data);
+        setState(() {
+          balance = datasnapshot.data()['balance'];
+          card = datasnapshot.data()['cardnumber'];
+        });
+      }
+    });
+
+    historyReference.get().then((datasnapshot) {
+      if (datasnapshot.exists) {
+        setState(() {});
+      }
+      if (datasnapshot.exists == false) {}
+    });
+
+    cityTowerReference.get().then((datasnapshot) {
+      if (datasnapshot.exists) {
+        setState(() {
+          cityTowerPrice = datasnapshot.data()['discount'];
+        });
+      }
+    });
+
+    citywalkReference.get().then((datasnapshot) {
+      if (datasnapshot.exists) {
+        setState(() {
+          citywalkPrice = datasnapshot.data()['discount'];
+        });
+      }
+    });
+
+    gambirReference.get().then((datasnapshot) {
+      if (datasnapshot.exists) {
+        setState(() {
+          gambirPrice = datasnapshot.data()['discount'];
+        });
+      }
+    });
+
+    grandindonesiaReference.get().then((datasnapshot) {
+      if (datasnapshot.exists) {
+        setState(() {
+          grandindonesiaPrice = datasnapshot.data()['discount'];
+        });
+      }
+    });
+
+    kotakasablankaReference.get().then((datasnapshot) {
+      if (datasnapshot.exists) {
+        setState(() {
+          kotakasablankaPrice = datasnapshot.data()['discount'];
+        });
+      }
+    });
+
+    pacificplaceReference.get().then((datasnapshot) {
+      if (datasnapshot.exists) {
+        setState(() {
+          pacificplacePrice = datasnapshot.data()['discount'];
+        });
+      }
+    });
+
+    plazaindonesiaReference.get().then((datasnapshot) {
+      if (datasnapshot.exists) {
+        setState(() {
+          plazaindonesiaPrice = datasnapshot.data()['discount'];
+        });
+      }
+    });
+
+    plazasemanggiReference.get().then((datasnapshot) {
+      if (datasnapshot.exists) {
+        setState(() {
+          plazasemanggiPrice = datasnapshot.data()['discount'];
+        });
+      }
+    });
+
+    plazasenayanReference.get().then((datasnapshot) {
+      if (datasnapshot.exists) {
+        setState(() {
+          plazasenayanPrice = datasnapshot.data()['discount'];
+        });
+      }
+    });
+
+    ritzcarltonReference.get().then((datasnapshot) {
+      if (datasnapshot.exists) {
+        setState(() {
+          ritzcarltonPrice = datasnapshot.data()['discount'];
+        });
+      }
+    });
+
+    sarinahReference.get().then((datasnapshot) {
+      if (datasnapshot.exists) {
+        setState(() {
+          sarinahPrice = datasnapshot.data()['discount'];
+        });
+      }
+    });
+
+    senayancityReference.get().then((datasnapshot) {
+      if (datasnapshot.exists) {
+        setState(() {
+          senayancityPrice = datasnapshot.data()['discount'];
+        });
+      }
+    });
+
+    sudirmanplazaReference.get().then((datasnapshot) {
+      if (datasnapshot.exists) {
+        setState(() {
+          sudirmanplazaPrice = datasnapshot.data()['discount'];
+        });
+      }
+    });
+  }
 
   Future<void> getBalanceHere() async {
     documentReference.get().then((datasnapshot) {
@@ -322,7 +470,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     listItems.add(InkWell(
       child: Container(
-          height: 150,
+          height: 100,
           margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -343,26 +491,15 @@ class _MyHomePageState extends State<MyHomePage> {
                       style: const TextStyle(
                           fontSize: 23, fontWeight: FontWeight.bold),
                     ),
-                    Text(
-                      cityTower + " kilometers away",
-                      style: const TextStyle(fontSize: 17, color: Colors.grey),
-                    ),
                     SizedBox(
                       height: 10,
                     ),
                     Text(
-                      "Rp. " + cityTowerPrice.toString(),
-                      style: const TextStyle(
-                          fontSize: 23,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold),
+                      cityTowerText,
+                      style: const TextStyle(fontSize: 17, color: Colors.grey),
                     )
                   ],
                 ),
-                Image.asset(
-                  "assets/citytower.jpg",
-                  height: 200,
-                )
               ],
             ),
           )),
@@ -374,7 +511,7 @@ class _MyHomePageState extends State<MyHomePage> {
     listItems.add(
       InkWell(
         child: Container(
-            height: 150,
+            height: 100,
             margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -397,24 +534,14 @@ class _MyHomePageState extends State<MyHomePage> {
                         style: const TextStyle(
                             fontSize: 23, fontWeight: FontWeight.bold),
                       ),
-                      Text(
-                        citywalk + " kilometers away",
-                        style:
-                            const TextStyle(fontSize: 17, color: Colors.grey),
-                      ),
                       SizedBox(
                         height: 10,
                       ),
-                      Text(
-                        "Rp. " + citywalkPrice.toString(),
-                        style: const TextStyle(
-                            fontSize: 23,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
-                      )
+                      Text(citywalkText,
+                          style:
+                              const TextStyle(fontSize: 17, color: Colors.grey))
                     ],
                   ),
-                  Image.asset("assets/citywalk.jpg", width: 100)
                 ],
               ),
             )),
@@ -430,7 +557,7 @@ class _MyHomePageState extends State<MyHomePage> {
     listItems.add(
       InkWell(
         child: Container(
-            height: 150,
+            height: 100,
             margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -453,24 +580,16 @@ class _MyHomePageState extends State<MyHomePage> {
                         style: const TextStyle(
                             fontSize: 23, fontWeight: FontWeight.bold),
                       ),
-                      Text(
-                        gambir + " kilometers away",
-                        style:
-                            const TextStyle(fontSize: 17, color: Colors.grey),
-                      ),
                       SizedBox(
                         height: 10,
                       ),
                       Text(
-                        "Rp. " + gambirPrice.toString(),
-                        style: const TextStyle(
-                            fontSize: 23,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
+                        gambirText,
+                        style:
+                            const TextStyle(fontSize: 17, color: Colors.grey),
                       )
                     ],
                   ),
-                  Image.asset("assets/gambir.jpg", width: 100)
                 ],
               ),
             )),
@@ -486,7 +605,7 @@ class _MyHomePageState extends State<MyHomePage> {
     listItems.add(
       InkWell(
         child: Container(
-            height: 150,
+            height: 100,
             margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -509,27 +628,16 @@ class _MyHomePageState extends State<MyHomePage> {
                         style: const TextStyle(
                             fontSize: 23, fontWeight: FontWeight.bold),
                       ),
-                      Text(
-                        grandIndo + " kilometers away",
-                        style:
-                            const TextStyle(fontSize: 17, color: Colors.grey),
-                      ),
                       SizedBox(
                         height: 10,
                       ),
                       Text(
-                        "Rp. " + grandindonesiaPrice.toString(),
-                        style: const TextStyle(
-                            fontSize: 23,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
-                      )
+                        grandIndoText,
+                        style:
+                            const TextStyle(fontSize: 17, color: Colors.grey),
+                      ),
                     ],
                   ),
-                  Image.asset(
-                    "assets/gi.jpg",
-                    height: 90,
-                  )
                 ],
               ),
             )),
@@ -545,7 +653,7 @@ class _MyHomePageState extends State<MyHomePage> {
     listItems.add(
       InkWell(
         child: Container(
-            height: 150,
+            height: 100,
             margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -568,27 +676,16 @@ class _MyHomePageState extends State<MyHomePage> {
                         style: const TextStyle(
                             fontSize: 23, fontWeight: FontWeight.bold),
                       ),
-                      Text(
-                        kokas + " kilometers away",
-                        style:
-                            const TextStyle(fontSize: 17, color: Colors.grey),
-                      ),
                       SizedBox(
                         height: 10,
                       ),
                       Text(
-                        "Rp. " + kotakasablankaPrice.toString(),
-                        style: const TextStyle(
-                            fontSize: 23,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
+                        kokasText,
+                        style:
+                            const TextStyle(fontSize: 17, color: Colors.grey),
                       )
                     ],
                   ),
-                  Image.asset(
-                    "assets/kokas.png",
-                    height: 100,
-                  )
                 ],
               ),
             )),
@@ -604,7 +701,7 @@ class _MyHomePageState extends State<MyHomePage> {
     listItems.add(
       InkWell(
         child: Container(
-            height: 150,
+            height: 100,
             margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -627,27 +724,16 @@ class _MyHomePageState extends State<MyHomePage> {
                         style: const TextStyle(
                             fontSize: 23, fontWeight: FontWeight.bold),
                       ),
-                      Text(
-                        pacific + " kilometers away",
-                        style:
-                            const TextStyle(fontSize: 17, color: Colors.grey),
-                      ),
                       SizedBox(
                         height: 10,
                       ),
                       Text(
-                        "Rp. " + pacificplacePrice.toString(),
-                        style: const TextStyle(
-                            fontSize: 23,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
+                        pacificText,
+                        style:
+                            const TextStyle(fontSize: 17, color: Colors.grey),
                       )
                     ],
                   ),
-                  Image.asset(
-                    "assets/pp.jpg",
-                    width: 100,
-                  )
                 ],
               ),
             )),
@@ -663,7 +749,7 @@ class _MyHomePageState extends State<MyHomePage> {
     listItems.add(
       InkWell(
         child: Container(
-            height: 150,
+            height: 100,
             margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -686,27 +772,16 @@ class _MyHomePageState extends State<MyHomePage> {
                         style: const TextStyle(
                             fontSize: 23, fontWeight: FontWeight.bold),
                       ),
-                      Text(
-                        plazaIndo + " kilometers away",
-                        style:
-                            const TextStyle(fontSize: 17, color: Colors.grey),
-                      ),
                       SizedBox(
                         height: 10,
                       ),
                       Text(
-                        "Rp. " + plazaindonesiaPrice.toString(),
-                        style: const TextStyle(
-                            fontSize: 23,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
+                        plazaIndoText,
+                        style:
+                            const TextStyle(fontSize: 17, color: Colors.grey),
                       )
                     ],
                   ),
-                  Image.asset(
-                    "assets/pi.png",
-                    width: 100,
-                  )
                 ],
               ),
             )),
@@ -721,7 +796,7 @@ class _MyHomePageState extends State<MyHomePage> {
     listItems.add(
       InkWell(
         child: Container(
-            height: 150,
+            height: 100,
             margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -744,27 +819,16 @@ class _MyHomePageState extends State<MyHomePage> {
                         style: const TextStyle(
                             fontSize: 23, fontWeight: FontWeight.bold),
                       ),
-                      Text(
-                        plazaSemanggi + " kilometers away",
-                        style:
-                            const TextStyle(fontSize: 17, color: Colors.grey),
-                      ),
                       SizedBox(
                         height: 10,
                       ),
                       Text(
-                        "Rp. " + plazasemanggiPrice.toString(),
-                        style: const TextStyle(
-                            fontSize: 23,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
+                        plazaSemanggiText,
+                        style:
+                            const TextStyle(fontSize: 17, color: Colors.grey),
                       )
                     ],
                   ),
-                  Image.asset(
-                    "assets/smg.jpg",
-                    width: 100,
-                  )
                 ],
               ),
             )),
@@ -779,7 +843,7 @@ class _MyHomePageState extends State<MyHomePage> {
     listItems.add(
       InkWell(
         child: Container(
-            height: 150,
+            height: 100,
             margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -802,27 +866,16 @@ class _MyHomePageState extends State<MyHomePage> {
                         style: const TextStyle(
                             fontSize: 23, fontWeight: FontWeight.bold),
                       ),
-                      Text(
-                        plazaSenayan + " kilometers away",
-                        style:
-                            const TextStyle(fontSize: 17, color: Colors.grey),
-                      ),
                       SizedBox(
                         height: 10,
                       ),
                       Text(
-                        "Rp. " + plazasenayanPrice.toString(),
-                        style: const TextStyle(
-                            fontSize: 23,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
+                        plazaSenayanText,
+                        style:
+                            const TextStyle(fontSize: 17, color: Colors.grey),
                       )
                     ],
                   ),
-                  Image.asset(
-                    "assets/ps.png",
-                    width: 100,
-                  )
                 ],
               ),
             )),
@@ -837,7 +890,7 @@ class _MyHomePageState extends State<MyHomePage> {
     listItems.add(
       InkWell(
         child: Container(
-            height: 150,
+            height: 100,
             margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -860,27 +913,16 @@ class _MyHomePageState extends State<MyHomePage> {
                         style: const TextStyle(
                             fontSize: 23, fontWeight: FontWeight.bold),
                       ),
-                      Text(
-                        ritzCarlton + " kilometers away",
-                        style:
-                            const TextStyle(fontSize: 17, color: Colors.grey),
-                      ),
                       SizedBox(
                         height: 10,
                       ),
                       Text(
-                        "Rp. " + ritzcarltonPrice.toString(),
-                        style: const TextStyle(
-                            fontSize: 23,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
+                        ritzText,
+                        style:
+                            const TextStyle(fontSize: 17, color: Colors.grey),
                       )
                     ],
                   ),
-                  Image.asset(
-                    "assets/ritz.jpg",
-                    width: 100,
-                  )
                 ],
               ),
             )),
@@ -895,7 +937,7 @@ class _MyHomePageState extends State<MyHomePage> {
     listItems.add(
       InkWell(
         child: Container(
-            height: 150,
+            height: 100,
             margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -918,27 +960,16 @@ class _MyHomePageState extends State<MyHomePage> {
                         style: const TextStyle(
                             fontSize: 23, fontWeight: FontWeight.bold),
                       ),
-                      Text(
-                        sarinah + " kilometers away",
-                        style:
-                            const TextStyle(fontSize: 17, color: Colors.grey),
-                      ),
                       SizedBox(
                         height: 10,
                       ),
                       Text(
-                        "Rp. " + sarinahPrice.toString(),
-                        style: const TextStyle(
-                            fontSize: 23,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
+                        sarinahText,
+                        style:
+                            const TextStyle(fontSize: 17, color: Colors.grey),
                       )
                     ],
                   ),
-                  Image.asset(
-                    "assets/sarinah.png",
-                    width: 100,
-                  )
                 ],
               ),
             )),
@@ -953,7 +984,7 @@ class _MyHomePageState extends State<MyHomePage> {
     listItems.add(
       InkWell(
         child: Container(
-            height: 150,
+            height: 100,
             margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -976,27 +1007,16 @@ class _MyHomePageState extends State<MyHomePage> {
                         style: const TextStyle(
                             fontSize: 23, fontWeight: FontWeight.bold),
                       ),
-                      Text(
-                        senayanCity + " kilometers away",
-                        style:
-                            const TextStyle(fontSize: 17, color: Colors.grey),
-                      ),
                       SizedBox(
                         height: 10,
                       ),
                       Text(
-                        "Rp. " + senayancityPrice.toString(),
-                        style: const TextStyle(
-                            fontSize: 23,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
+                        sencyText,
+                        style:
+                            const TextStyle(fontSize: 17, color: Colors.grey),
                       )
                     ],
                   ),
-                  Image.asset(
-                    "assets/sency.jpg",
-                    width: 100,
-                  )
                 ],
               ),
             )),
@@ -1012,7 +1032,7 @@ class _MyHomePageState extends State<MyHomePage> {
     listItems.add(
       InkWell(
         child: Container(
-            height: 150,
+            height: 100,
             margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -1035,27 +1055,16 @@ class _MyHomePageState extends State<MyHomePage> {
                         style: const TextStyle(
                             fontSize: 23, fontWeight: FontWeight.bold),
                       ),
-                      Text(
-                        sudirmanPlaza + " kilometers away",
-                        style:
-                            const TextStyle(fontSize: 17, color: Colors.grey),
-                      ),
                       SizedBox(
                         height: 10,
                       ),
                       Text(
-                        "Rp. " + sudirmanplazaPrice.toString(),
-                        style: const TextStyle(
-                            fontSize: 23,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
+                        sudirmanPlazaText,
+                        style:
+                            const TextStyle(fontSize: 17, color: Colors.grey),
                       )
                     ],
                   ),
-                  Image.asset(
-                    "assets/suplaz.jpg",
-                    width: 100,
-                  )
                 ],
               ),
             )),
@@ -1077,7 +1086,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     getPostsData();
-    getBalanceHere();
+    _getBalance();
     controller.addListener(() {
       double value = controller.offset / 119;
 
@@ -1096,23 +1105,97 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    if (cityTowerPrice == null ||
-        citywalkPrice == null ||
-        gambirPrice == null ||
-        grandindonesiaPrice == null ||
-        kotakasablankaPrice == null ||
-        pacificplacePrice == null ||
-        plazaindonesiaPrice == null ||
-        plazasemanggiPrice == null) {
-      cityTowerPrice = "Loading...";
-      citywalkPrice = "Loading...";
-      gambirPrice = "Loading...";
-      grandindonesiaPrice = "Loading...";
-      kotakasablankaPrice = "Loading...";
-      pacificplacePrice = "Loading...";
-      plazaindonesiaPrice = "Loading...";
-      plazasemanggiPrice = "Loading...";
+    if (cityTowerPrice == 0) {
+      cityTowerText = "You have no discounts at this location";
+    } else {
+      cityTowerText =
+          "Get Rp. " + cityTowerPrice.toString() + " off at this location";
     }
+
+    if (citywalkPrice == 0) {
+      citywalkText = "You have no discounts at this location";
+    } else {
+      citywalkText =
+          "Get Rp. " + citywalkPrice.toString() + " off at this location";
+    }
+
+    if (gambirPrice == 0) {
+      gambirText = "You have no discounts at this location";
+    } else {
+      gambirText =
+          "Get Rp. " + gambirPrice.toString() + " off at this location";
+    }
+
+    if (grandindonesiaPrice == 0) {
+      grandIndoText = "You have no discounts at this location";
+    } else {
+      grandIndoText =
+          "Get Rp. " + grandindonesiaPrice.toString() + " off at this location";
+    }
+
+    if (kotakasablankaPrice == 0) {
+      kokasText = "You have no discounts at this location";
+    } else {
+      kokasText =
+          "Get Rp. " + kotakasablankaPrice.toString() + " off at this location";
+    }
+
+    if (pacificplacePrice == 0) {
+      pacificText = "You have no discounts at this location";
+    } else {
+      pacificText =
+          "Get Rp. " + pacificplacePrice.toString() + " off at this location";
+    }
+
+    if (plazaindonesiaPrice == 0) {
+      plazaIndoText = "You have no discounts at this location";
+    } else {
+      plazaIndoText =
+          "Get Rp. " + plazaindonesiaPrice.toString() + " off at this location";
+    }
+
+    if (plazasemanggiPrice == 0) {
+      plazaSemanggiText = "You have no discounts at this location";
+    } else {
+      plazaSemanggiText =
+          "Get Rp. " + plazasemanggiPrice.toString() + " off at this location";
+    }
+
+    if (plazasenayanPrice == 0) {
+      plazaSenayanText = "You have no discounts at this location";
+    } else {
+      plazaSenayanText =
+          "Get Rp. " + plazasenayanPrice.toString() + " off at this location";
+    }
+
+    if (ritzcarltonPrice == 0) {
+      ritzText = "You have no discounts at this location";
+    } else {
+      ritzText =
+          "Get Rp. " + ritzcarltonPrice.toString() + " off at this location";
+    }
+
+    if (sarinahPrice == 0) {
+      sarinahText = "You have no discounts at this location";
+    } else {
+      sarinahText =
+          "Get Rp. " + sarinahPrice.toString() + " off at this location";
+    }
+
+    if (senayancityPrice == 0) {
+      sencyText = "You have no discounts at this location";
+    } else {
+      sencyText =
+          "Get Rp. " + senayancityPrice.toString() + " off at this location";
+    }
+
+    if (sudirmanplazaPrice == 0) {
+      sudirmanPlazaText = "You have no discounts at this location";
+    } else {
+      sudirmanPlazaText =
+          "Get Rp. " + sudirmanplazaPrice.toString() + " off at this location";
+    }
+
     if (points == null) {
       points = 0;
     }
@@ -1121,17 +1204,18 @@ class _MyHomePageState extends State<MyHomePage> {
     return RefreshIndicator(
       onRefresh: refreshData,
       child: Scaffold(
+        key: scaffoldKey,
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: Text('Dashboard'),
+          title: Text('Vouchers'),
           elevation: 0,
           backgroundColor: Colors.blue,
           leading: IconButton(
             icon: Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () => Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => MapPage()),
-                ),
+              MaterialPageRoute(builder: (context) => ReserveList()),
+            ),
           ),
           actions: <Widget>[
             IconButton(
@@ -1252,6 +1336,83 @@ class CategoriesScroller extends StatelessWidget {
                   margin: EdgeInsets.only(right: 20),
                   height: categoryHeight,
                   decoration: BoxDecoration(
+                      color: Colors.orange,
+                      borderRadius: BorderRadius.all(Radius.circular(20.0))),
+                  child: Container(
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            "Vouchers",
+                            style: TextStyle(
+                                fontSize: 21,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            "You are here!",
+                            style: TextStyle(fontSize: 16, color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                onTap: () {
+                  final snackbar = new SnackBar(
+                    content: new Text("You are already here!"),
+                  );
+                  scaffoldKey.currentState.showSnackBar(snackbar);
+                },
+              ),
+              InkWell(
+                child: Container(
+                  width: 150,
+                  margin: EdgeInsets.only(right: 20),
+                  height: categoryHeight,
+                  decoration: BoxDecoration(
+                      color: Colors.blueAccent,
+                      borderRadius: BorderRadius.all(Radius.circular(20.0))),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          "Dashboard",
+                          style: TextStyle(
+                              fontSize: 21,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          "Make a booking",
+                          //points.toStringAsFixed(0) + " points",
+                          style: TextStyle(fontSize: 16, color: Colors.white),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ReserveList()));
+                },
+              ),
+              InkWell(
+                child: Container(
+                  width: 150,
+                  margin: EdgeInsets.only(right: 20),
+                  height: categoryHeight,
+                  decoration: BoxDecoration(
                       color: Colors.purple,
                       borderRadius: BorderRadius.all(Radius.circular(20.0))),
                   child: Padding(
@@ -1289,44 +1450,6 @@ class CategoriesScroller extends StatelessWidget {
                   margin: EdgeInsets.only(right: 20),
                   height: categoryHeight,
                   decoration: BoxDecoration(
-                      color: Colors.orange,
-                      borderRadius: BorderRadius.all(Radius.circular(20.0))),
-                  child: Container(
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          "Vouchers",
-                          style: TextStyle(
-                              fontSize: 21,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                          Text(
-                            "View vouchers",
-                            style: TextStyle(fontSize: 16, color: Colors.white),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Vouchers()));
-                },
-              ),
-              InkWell(
-                child: Container(
-                  width: 150,
-                  margin: EdgeInsets.only(right: 20),
-                  height: categoryHeight,
-                  decoration: BoxDecoration(
                       color: Colors.red,
                       borderRadius: BorderRadius.all(Radius.circular(20.0))),
                   child: Padding(
@@ -1334,14 +1457,14 @@ class CategoriesScroller extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                      Text(
-                        "Promotions",
-                        style: TextStyle(
-                            fontSize: 21,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
+                        Text(
+                          "Promotions",
+                          style: TextStyle(
+                              fontSize: 21,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(
                           height: 10,
                         ),
                         Text(

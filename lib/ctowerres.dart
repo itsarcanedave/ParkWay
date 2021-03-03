@@ -46,6 +46,9 @@ class CTowerResState extends State<CTowerRes> {
   final DocumentReference bookingReference = FirebaseFirestore.instance
       .doc("Users" + "/" + name + "/" + "Bookings" + "/" + "latest");
 
+  final DocumentReference valetReference =
+      FirebaseFirestore.instance.doc("Valet" + "/" + place);
+
   bool finish = false;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn googleSignIn = new GoogleSignIn();
@@ -82,6 +85,7 @@ class CTowerResState extends State<CTowerRes> {
 
     if (isSwitched == true) {
       placeReference.update({"quota": FieldValue.increment(1 * -1)});
+      valetReference.update({"$name": hours.toString()});
     }
 
     documentReference.get().then((datasnapshot) {
@@ -145,6 +149,7 @@ class CTowerResState extends State<CTowerRes> {
 
   void performTopup() {
     _process();
+
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => CTowerLoc()),

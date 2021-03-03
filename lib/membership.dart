@@ -1,9 +1,9 @@
 import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:parkway/topup.dart';
 
 class Membership extends StatefulWidget {
   @override
@@ -77,6 +77,9 @@ class MembershipState extends State<Membership> {
     String member;
     _getBalance();
     if (name.length > 20) {}
+    if (balance == null) {
+      balance = 0;
+    }
     if (balance <= 500) {
       member = "New Member";
     } else if (balance <= 2000) {
@@ -88,7 +91,8 @@ class MembershipState extends State<Membership> {
     } else {
       member = "Platinum Member";
     }
-
+    final double categoryHeight =
+        MediaQuery.of(context).size.height * 0.30 - 50;
     return new Scaffold(
         key: scaffoldKey,
         appBar: new AppBar(
@@ -101,6 +105,9 @@ class MembershipState extends State<Membership> {
                     key: formKey,
                     child: new Column(
                       children: <Widget>[
+                        new Padding(
+                          padding: const EdgeInsets.all(10.0),
+                        ),
                         new TextField(
                           enabled: false,
                           decoration: InputDecoration(

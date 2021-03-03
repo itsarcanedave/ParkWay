@@ -1,7 +1,8 @@
 import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:parkway/sudirmanplazaloc.dart';
 
@@ -43,6 +44,9 @@ class SudirmanPlazaResState extends State<SudirmanPlazaRes> {
   final DocumentReference bookingReference = FirebaseFirestore.instance
       .doc("Users" + "/" + name + "/" + "Bookings" + "/" + "latest");
 
+  final DocumentReference valetReference =
+      FirebaseFirestore.instance.doc("Valet" + "/" + place);
+
   bool finish = false;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn googleSignIn = new GoogleSignIn();
@@ -79,6 +83,7 @@ class SudirmanPlazaResState extends State<SudirmanPlazaRes> {
 
     if (isSwitched == true) {
       placeReference.update({"quota": FieldValue.increment(1 * -1)});
+      valetReference.update({"$name": hours.toString()});
     }
 
     documentReference.get().then((datasnapshot) {
