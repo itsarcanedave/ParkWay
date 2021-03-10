@@ -134,7 +134,7 @@ class NoHistoryState extends State<NoHistory> {
           title: new Text("Ongoing Reservations"),
           backgroundColor: Colors.blue,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.white),
+            icon: Icon(Icons.arrow_back_ios_rounded, color: Colors.white),
             onPressed: () => Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => HomeScreen()),

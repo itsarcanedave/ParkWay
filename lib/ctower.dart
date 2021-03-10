@@ -6,6 +6,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:parkway/home.dart';
 import 'package:parkway/ctowerres.dart';
 import 'dart:math' show cos, sqrt, asin;
+import 'package:parkway/reserve.dart';
 
 class CTower extends StatefulWidget {
   @override
@@ -76,7 +77,13 @@ class CTowerState extends State<CTower> {
       appBar: AppBar(
         title: Text("City Tower Sudirman"),
         backgroundColor: Colors.blue,
-      ),
+        leading: IconButton(
+        icon: Icon(Icons.arrow_back_ios_rounded, color: Colors.white),
+        onPressed: () => Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) =>ReserveList()),
+        ),
+      ),),
       body: new Container(
           height: double.infinity,
           width: double.infinity,

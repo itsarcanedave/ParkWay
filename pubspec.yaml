@@ -30,6 +30,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.1
   firebase_auth:
+  pinch_zoom:
   infinite_listview:
   flutter_google_places:
   google_sign_in:

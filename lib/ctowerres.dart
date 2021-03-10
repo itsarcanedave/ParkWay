@@ -190,6 +190,7 @@ class CTowerResState extends State<CTowerRes> {
             key: scaffoldKey,
             appBar: new AppBar(
               title: new Text("Reservation"),
+
             ),
             body: new Padding(
                 padding: const EdgeInsets.all(20.0),

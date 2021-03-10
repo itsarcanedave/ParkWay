@@ -8,6 +8,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:parkway/topup.dart';
 import 'package:parkway/reserve.dart';
+import 'package:parkway/p1.dart';
+import 'package:parkway/p2.dart';
+import 'package:parkway/p3.dart';
 
 class CTowerLoc extends StatefulWidget {
   @override
@@ -484,10 +487,9 @@ class CTowerLocState extends State<CTowerLoc> {
               color: Colors.blueAccent,
               //onPressed: _add,
               onPressed: () {
-                //   Navigator.push(
-                //    context,
-                //   MaterialPageRoute(builder: (context) => TopUp()),
-                //  );
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => P1()));
               },
               child: new Text(
                 "Basement 1",
@@ -503,6 +505,9 @@ class CTowerLocState extends State<CTowerLoc> {
               color: Colors.blueAccent,
               //onPressed: _add,
               onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => P2()));
                 //   Navigator.push(
                 //    context,
                 //   MaterialPageRoute(builder: (context) => TopUp()),
@@ -522,6 +527,10 @@ class CTowerLocState extends State<CTowerLoc> {
               color: Colors.blueAccent,
               //onPressed: _add,
               onPressed: () {
+    Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => P3()));
+
                 //   Navigator.push(
                 //    context,
                 //   MaterialPageRoute(builder: (context) => TopUp()),

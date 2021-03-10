@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:parkway/grandindores.dart';
 import 'package:parkway/home.dart';
-
+import 'package:parkway/reserve.dart';
 class GrandIndo extends StatefulWidget {
   @override
   GrandIndoState createState() {
@@ -77,6 +77,13 @@ class GrandIndoState extends State<GrandIndo> {
       appBar: AppBar(
         title: Text("Grand Indonesia"),
         backgroundColor: Colors.blue,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios_rounded, color: Colors.white),
+          onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) =>ReserveList()),
+          ),
+        ),
       ),
       body: new Container(
           height: double.infinity,

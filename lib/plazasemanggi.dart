@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:parkway/home.dart';
 import 'package:parkway/plazasemanggires.dart';
-
+import 'package:parkway/reserve.dart';
 class PlazaSemanggi extends StatefulWidget {
   @override
   PlazaSemanggiState createState() {
@@ -77,6 +77,13 @@ class PlazaSemanggiState extends State<PlazaSemanggi> {
       appBar: AppBar(
         title: Text("Plaza Semanggi"),
         backgroundColor: Colors.blue,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios_rounded, color: Colors.white),
+          onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) =>ReserveList()),
+          ),
+        ),
       ),
       body: new Container(
           height: double.infinity,

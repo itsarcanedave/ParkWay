@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:parkway/topup.dart';
 import 'package:parkway/updatecard.dart';
+import 'package:parkway/reserve.dart';
 
 class Payment extends StatefulWidget {
   @override
@@ -95,6 +96,13 @@ class PaymentState extends State<Payment> {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text("Wallet"),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios_rounded, color: Colors.white),
+          onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => ReserveList()),
+          ),
+        ),
       ),
       body: new Padding(
         padding: const EdgeInsets.all(20.0),
