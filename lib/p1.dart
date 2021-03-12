@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'dart:math' show cos, sqrt, asin;
 import 'package:geolocator/geolocator.dart';
 import 'package:pinch_zoom/pinch_zoom.dart';
@@ -10,6 +11,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:parkway/topup.dart';
 import 'package:parkway/reserve.dart';
 import 'package:parkway/cttowerloc.dart';
+import 'package:parkway/timerwall.dart';
 
 class P1 extends StatefulWidget {
   @override
@@ -384,6 +386,11 @@ class P1State extends State<P1> {
   @override
   Widget build(BuildContext context) {
     print(p1);
+    random(min, max){
+      var rn = new Random();
+      return min + rn.nextInt(max - min);
+    }
+    print(random(5,20));
     return Scaffold(
       appBar: new AppBar(
         title: new Text("Location Map"),
@@ -399,6 +406,13 @@ class P1State extends State<P1> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          new Text(
+            "Your parking location is " + random(7,17).toString(),
+            style: TextStyle(color: Colors.black, fontSize: 18),
+          ),
+          new Padding(
+            padding: const EdgeInsets.all(10.0),
+          ),
       Center(
       /*  child: PinchZoom(
           image: Image.network(p1),
@@ -422,10 +436,9 @@ class P1State extends State<P1> {
             color: Colors.blueAccent,
             //onPressed: _add,
             onPressed: () {
-              //   Navigator.push(
-              //    context,
-              //   MaterialPageRoute(builder: (context) => TopUp()),
-              //  );
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => TimerWall()));
             },
             child: new Text(
               "I HAVE ARRIVED",

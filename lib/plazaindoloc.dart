@@ -7,6 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:parkway/home.dart';
+import 'package:parkway/p1.dart';
+import 'package:parkway/p2.dart';
+import 'package:parkway/p3.dart';
+import 'package:parkway/p4.dart';
+import 'package:parkway/p5.dart';
+import 'package:parkway/p6.dart';
 
 class PlazaIndoLoc extends StatefulWidget {
   @override
@@ -504,6 +510,9 @@ class PlazaIndoLocState extends State<PlazaIndoLoc> {
               color: Colors.blueAccent,
               //onPressed: _add,
               onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => P1()));
                 //   Navigator.push(
                 //    context,
                 //   MaterialPageRoute(builder: (context) => TopUp()),
@@ -523,6 +532,9 @@ class PlazaIndoLocState extends State<PlazaIndoLoc> {
               color: Colors.blueAccent,
               //onPressed: _add,
               onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => P2()));
                 //   Navigator.push(
                 //    context,
                 //   MaterialPageRoute(builder: (context) => TopUp()),
@@ -542,6 +554,9 @@ class PlazaIndoLocState extends State<PlazaIndoLoc> {
               color: Colors.blueAccent,
               //onPressed: _add,
               onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => P3()));
                 //   Navigator.push(
                 //    context,
                 //   MaterialPageRoute(builder: (context) => TopUp()),

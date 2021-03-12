@@ -11,6 +11,11 @@ import 'package:parkway/reserve.dart';
 import 'package:parkway/p1.dart';
 import 'package:parkway/p2.dart';
 import 'package:parkway/p3.dart';
+import 'package:parkway/p4.dart';
+import 'package:parkway/p5.dart';
+import 'package:parkway/p6.dart';
+
+
 
 class CTowerLoc extends StatefulWidget {
   @override

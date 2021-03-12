@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:math' show cos, sqrt, asin;
+import 'dart:math';
 import 'package:geolocator/geolocator.dart';
 import 'package:parkway/home.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -8,6 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:parkway/topup.dart';
 import 'package:parkway/reserve.dart';
+import 'package:parkway/timerwall.dart';
 
 class P5 extends StatefulWidget {
   @override
@@ -381,6 +382,10 @@ class P5State extends State<P5> {
   @override
   Widget build(BuildContext context) {
     print(p1);
+    random(min, max){
+      var rn = new Random();
+      return min + rn.nextInt(max - min);
+    }
     return Scaffold(
       appBar: new AppBar(
         title: new Text("Location Map"),
@@ -396,6 +401,13 @@ class P5State extends State<P5> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          new Text(
+            "Your parking location is B" + random(1,6).toString(),
+            style: TextStyle(color: Colors.black, fontSize: 18),
+          ),
+          new Padding(
+            padding: const EdgeInsets.all(10.0),
+          ),
           Center(
             /*  child: PinchZoom(
           image: Image.network(p1),
@@ -419,10 +431,9 @@ class P5State extends State<P5> {
             color: Colors.blueAccent,
             //onPressed: _add,
             onPressed: () {
-              //   Navigator.push(
-              //    context,
-              //   MaterialPageRoute(builder: (context) => TopUp()),
-              //  );
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => TimerWall()));
             },
             child: new Text(
               "I HAVE ARRIVED",

@@ -7,6 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:parkway/home.dart';
+import 'package:parkway/p1.dart';
+import 'package:parkway/p2.dart';
+import 'package:parkway/p3.dart';
+import 'package:parkway/p4.dart';
+import 'package:parkway/p5.dart';
+import 'package:parkway/p6.dart';
 
 class PlazaSemanggiLoc extends StatefulWidget {
   @override
@@ -505,6 +511,9 @@ class PlazaSemanggiLocState extends State<PlazaSemanggiLoc> {
               color: Colors.blueAccent,
               //onPressed: _add,
               onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => P4()));
                 //   Navigator.push(
                 //    context,
                 //   MaterialPageRoute(builder: (context) => TopUp()),
@@ -524,6 +533,9 @@ class PlazaSemanggiLocState extends State<PlazaSemanggiLoc> {
               color: Colors.blueAccent,
               //onPressed: _add,
               onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => P5()));
                 //   Navigator.push(
                 //    context,
                 //   MaterialPageRoute(builder: (context) => TopUp()),
@@ -543,6 +555,9 @@ class PlazaSemanggiLocState extends State<PlazaSemanggiLoc> {
               color: Colors.blueAccent,
               //onPressed: _add,
               onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => P6()));
                 //   Navigator.push(
                 //    context,
                 //   MaterialPageRoute(builder: (context) => TopUp()),

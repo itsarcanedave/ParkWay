@@ -5,12 +5,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:parkway/history.dart';
+import 'package:parkway/timer.dart';
 
 
-class Cancel extends StatefulWidget {
+class TimerWall extends StatefulWidget {
   @override
-  CancelState createState() {
-    return new CancelState();
+  TimerWallState createState() {
+    return new TimerWallState();
   }
 }
 
@@ -27,7 +28,7 @@ var time = DateTime
     .millisecondsSinceEpoch
     .toString();
 
-class CancelState extends State<Cancel> {
+class TimerWallState extends State<TimerWall> {
 
   var valet;
   var hours;
@@ -100,13 +101,13 @@ class CancelState extends State<Cancel> {
 
   void _update() {
     final DocumentReference placeReference =
-        FirebaseFirestore.instance.doc("Places" + "/" + uplace);
+    FirebaseFirestore.instance.doc("Places" + "/" + uplace);
     //placeReference
     //   .update({"balance": FieldValue.increment(total*-1)});
     placeReference.update({"payments": FieldValue.increment(uprice * -1)});
     placeReference.update({"payments": FieldValue.increment(uprice / 2)});
     final DocumentReference valetReference =
-        FirebaseFirestore.instance.doc("Valet" + "/" + uplace);
+    FirebaseFirestore.instance.doc("Valet" + "/" + uplace);
     valetReference.update({"$name": FieldValue.delete()});
     bookingReference.delete();
   }
@@ -170,6 +171,7 @@ class CancelState extends State<Cancel> {
   }
 
   void performTopup() {
+
     _process();
     Navigator.push(
       context,
@@ -203,6 +205,7 @@ class CancelState extends State<Cancel> {
 
   @override
   Widget build(BuildContext context) {
+
     uratepark = 20000;
 
     if (uplace == null) {
@@ -232,11 +235,12 @@ class CancelState extends State<Cancel> {
     if (total == null) {
       total = 0;
     }
+
     return new Scaffold(
         key: scaffoldKey,
         appBar: new AppBar(
           backgroundColor: Colors.blue,
-          title: new Text("Cancel Reservation"),
+          title: new Text("Confirm Arrival"),
         ),
         body: new Padding(
           padding: const EdgeInsets.all(20.0),
@@ -264,8 +268,8 @@ class CancelState extends State<Cancel> {
                 ),
                 new Text(
 
-                  "Cancel reservation?" + "\n" +
-                      "You will receive a 50% refund",
+                  "Are you sure you have arrived\nat your parking location?" + "\n" + "\n"+
+                      "You reservation duration will\nstart counting down once you click\nthe button below",
                   textAlign: TextAlign.center,
                   style: const TextStyle(color: Colors.redAccent,
                       fontSize: 16, fontWeight: FontWeight.bold),
@@ -276,25 +280,29 @@ class CancelState extends State<Cancel> {
                   padding: const EdgeInsets.only(top: 20.0),
                 ),
                 new RaisedButton.icon(
-                  onPressed: _topup,
-
-                  //Timer(Duration(seconds: 5), () =>
-                  //);
-                  //},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Timer()));
+                    //   Navigator.push(
+                    //    context,
+                    //   MaterialPageRoute(builder: (context) => TopUp()),
+                    //  );
+                  },
                   shape: RoundedRectangleBorder(
                       borderRadius:
                       BorderRadius.all(Radius.circular(10.0))),
                   label: Text(
-                    'CONFIRM AND CANCEL',
+                    'YES, START COUNTDOWN NOW',
                     style: TextStyle(color: Colors.white, fontSize: 18),
                   ),
                   icon: Icon(
-                    Icons.cancel_rounded,
+                    Icons.timer_rounded,
                     color: Colors.white,
                   ),
                   textColor: Colors.black,
                   splashColor: Colors.blue,
-                  color: Colors.redAccent,
+                  color: Colors.blueAccent,
                 ),
                 new TextField(
                     enabled: false, decoration: InputDecoration(
