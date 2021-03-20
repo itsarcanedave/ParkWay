@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:parkway/login.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -11,8 +13,18 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+    //toast();
+  }
 
-    Timer(Duration(seconds: 5), () => goToLogin(context));
+  void toast() {
+    Fluttertoast.showToast(
+      msg:
+          "Restart the application\nif this screen does not load\nin 10 seconds!",
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM, // also possible "TOP" and "CENTER"
+      //backgroundColor: "#e74c3c",
+      //Timer(Duration(seconds: 5), () => goToLogin(context));
+    );
   }
 
   static void goToLogin(BuildContext context) {
@@ -21,6 +33,12 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Timer(
+        Duration(seconds: 10),
+        () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => LoginScreen()),
+            ));
     return Scaffold(
       body: Stack(
         fit: StackFit.expand,
@@ -50,7 +68,7 @@ class _SplashScreenState extends State<SplashScreen> {
                         padding: EdgeInsets.only(top: 10.0),
                       ),
                       Text(
-                       "ParkWay",
+                        "ParkWay",
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,

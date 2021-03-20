@@ -31,7 +31,7 @@ dependencies:
   cupertino_icons: ^1.0.1
   firebase_auth:
   pinch_zoom:
-  fluttertoast: ^7.1.1
+  fluttertoast: ^7.1.8
   infinite_listview:
   flutter_google_places:
   google_sign_in:

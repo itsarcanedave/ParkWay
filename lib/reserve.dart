@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:parkway/citywalk.dart';
 import 'package:parkway/ctower.dart';
@@ -320,6 +321,17 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<Widget> itemsData = [];
   List<Widget> listItems = [];
+
+  void toast() {
+    Fluttertoast.showToast(
+      msg:
+          "Use the built-in back button to navigate to the previous page\nDo not use the back button\nof your device or it will\ncrash the application!",
+      toastLength: Toast.LENGTH_LONG,
+      gravity: ToastGravity.BOTTOM, // also possible "TOP" and "CENTER"
+      //backgroundColor: "#e74c3c",
+      //Timer(Duration(seconds: 5), () => goToLogin(context));
+    );
+  }
 
   void getPostsData() async {
     final Position position = await Geolocator()
@@ -1377,6 +1389,7 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     getPostsData();
     getBalanceHere();
+    toast();
     controller.addListener(() {
       double value = controller.offset / 119;
 
