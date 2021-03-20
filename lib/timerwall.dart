@@ -118,7 +118,6 @@ class TimerWallState extends State<TimerWall> {
         setState(() {
           uhours = int.parse(datasnapshot.data()['hours']);
           uplace = datasnapshot.data()['place'];
-          uprice = int.parse(datasnapshot.data()['price']);
           uvalet = datasnapshot.data()['valet'];
         });
       }
@@ -205,7 +204,7 @@ class TimerWallState extends State<TimerWall> {
 
   @override
   Widget build(BuildContext context) {
-
+    _getBalance();
     uratepark = 20000;
 
     if (uplace == null) {
@@ -221,6 +220,16 @@ class TimerWallState extends State<TimerWall> {
       valet = " ";
     }
 
+    historyReference.get().then((datasnapshot) {
+      if (datasnapshot.exists) {
+        setState(() {
+          uhours = int.parse(datasnapshot.data()['hours']);
+          uplace = datasnapshot.data()['place'];
+          uvalet = datasnapshot.data()['valet'];
+        });
+      }
+    });
+
     if (uvalet == "Yes") {
       uvalet = "requested";
       //isSwitched = true;
@@ -230,7 +239,6 @@ class TimerWallState extends State<TimerWall> {
       //isSwitched = false;
 
     }
-
 
     if (total == null) {
       total = 0;
@@ -261,20 +269,22 @@ class TimerWallState extends State<TimerWall> {
                   style: const TextStyle(
                       fontSize: 16, fontWeight: FontWeight.bold),
                 ),
+                // new Text(
+                //  "Valet is " + uvalet + "\n",
+                // style: const TextStyle(
+                //    fontSize: 16, fontWeight: FontWeight.bold),
+                //  ),
                 new Text(
-                  "Valet is " + uvalet + "\n",
-                  style: const TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-                new Text(
-
-                  "Are you sure you have arrived\nat your parking location?" + "\n" + "\n"+
-                      "You reservation duration will\nstart counting down once you click\nthe button below",
+                  "Are you sure you have arrived\nat your parking location?" +
+                      "\n" +
+                      "\n" +
+                      "Your reservation duration will\nstart counting down once you click\nthe button below",
                   textAlign: TextAlign.center,
-                  style: const TextStyle(color: Colors.redAccent,
-                      fontSize: 16, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      color: Colors.redAccent,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold),
                 ),
-
 
                 new Padding(
                   padding: const EdgeInsets.only(top: 20.0),

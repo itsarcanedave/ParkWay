@@ -1,10 +1,12 @@
 import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:parkway/cttowerloc.dart';
-import 'package:flutter/services.dart';
+import 'package:parkway/valet.dart';
 
 class CTowerRes extends StatefulWidget {
   @override
@@ -13,6 +15,7 @@ class CTowerRes extends StatefulWidget {
   }
 }
 
+final scaffoldKeyRes = new GlobalKey<ScaffoldState>();
 final FirebaseAuth auth = FirebaseAuth.instance;
 final User user = auth.currentUser;
 final name = user.displayName;
@@ -26,12 +29,17 @@ class CTowerResState extends State<CTowerRes> {
   var hours;
   var total;
   var balance;
+  var points;
   var card;
   var topup;
   var amount;
   var code;
+  var discount;
   var dummyparking;
   var dummyvalet;
+  String member;
+  var valetDiscount;
+  var parkingDiscount;
 
   bool isSwitched = false;
   StreamSubscription<DocumentSnapshot> subscription;
@@ -92,6 +100,7 @@ class CTowerResState extends State<CTowerRes> {
       if (datasnapshot.exists) {
         setState(() {
           balance = datasnapshot.data()['balance'];
+          points = datasnapshot.data()['points'];
         });
       }
     });
@@ -102,6 +111,25 @@ class CTowerResState extends State<CTowerRes> {
       if (datasnapshot.exists) {
         setState(() {
           balance = datasnapshot.data()['balance'];
+          points = datasnapshot.data()['points'];
+          if (points <= 500) {
+            member = "No membership benefits applied";
+          } else if (points <= 2000) {
+            member = "Bronze Member benefits applied";
+            parkingDiscount = 0.1;
+          } else if (points <= 5000) {
+            member = "Silver Member benefits applied";
+            parkingDiscount = 0.2;
+            valetDiscount = 0.1;
+          } else if (points <= 10000) {
+            member = "Gold Member benefits applied";
+            parkingDiscount = 0.25;
+            valetDiscount = 0.2;
+          } else {
+            member = "Platinum Member benefits applied";
+            parkingDiscount = 0.5;
+            valetDiscount = 1;
+          }
           //ard = datasnapshot.data()['cardnumber'];
         });
       }
@@ -111,6 +139,7 @@ class CTowerResState extends State<CTowerRes> {
         setState(() {
           price = datasnapshot.data()['price'];
           valet = datasnapshot.data()['valet'];
+          discount = datasnapshot.data()['discount'];
           //ard = datasnapshot.data()['cardnumber'];
         });
       }
@@ -119,11 +148,28 @@ class CTowerResState extends State<CTowerRes> {
 
   void _topup() {
     final form = formKey.currentState;
-
+    placeReference.get().then((datasnapshot) {
+      if (datasnapshot.exists) {
+        setState(() {
+          price = datasnapshot.data()['price'];
+          valet = datasnapshot.data()['valet'];
+          //ard = datasnapshot.data()['cardnumber'];
+        });
+      }
+    });
     if (form.validate()) {
       form.save();
-
-      performTopup();
+      if (balance >= total) {
+        performTopup();
+      } else {
+        Fluttertoast.showToast(
+          msg: "Insufficient balance!",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM, // also possible "TOP" and "CENTER"
+          //backgroundColor: "#e74c3c",
+          //textColor: '#ffffff'
+        );
+      }
     }
   }
 
@@ -139,21 +185,31 @@ class CTowerResState extends State<CTowerRes> {
 
   void performCalc() {
     if (isSwitched == true) {
-      total = (int.parse(hours) * price) + valet;
+      total = (int.parse(hours) * price);
+      total = total - (total * parkingDiscount);
+      valet = valet - (valet * valetDiscount);
+      total = total + valet - discount;
       valetstatus = "Yes";
     } else if (isSwitched == false) {
       total = (int.parse(hours) * price);
+      total = total - (total * parkingDiscount) - discount;
       valetstatus = "No";
     }
   }
 
   void performTopup() {
     _process();
-
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => CTowerLoc()),
-    );
+    if (isSwitched == true) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Valet()),
+      );
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => CTowerLoc()),
+      );
+    }
 
     final form = formKey.currentState;
     form.reset();
@@ -164,6 +220,15 @@ class CTowerResState extends State<CTowerRes> {
     //SystemChrome.setEnabledSystemUIOverlays ([SystemUiOverlay.top]);
     _getBalance();
     super.initState();
+    placeReference.get().then((datasnapshot) {
+      if (datasnapshot.exists) {
+        setState(() {
+          price = datasnapshot.data()['price'];
+          valet = datasnapshot.data()['valet'];
+          //ard = datasnapshot.data()['cardnumber'];
+        });
+      }
+    });
     subscription = documentReference.snapshots().listen((datasnapshot) {
       if (datasnapshot.exists) {
         setState(() {
@@ -184,13 +249,26 @@ class CTowerResState extends State<CTowerRes> {
     if (total == null) {
       total = 0;
     }
+    placeReference.get().then((datasnapshot) {
+      if (datasnapshot.exists) {
+        setState(() {
+          price = datasnapshot.data()['price'];
+          valet = datasnapshot.data()['valet'];
+          //ard = datasnapshot.data()['cardnumber'];
+        });
+      }
+    });
     return new WillPopScope(
         onWillPop: () async => false,
         child: new Scaffold(
             key: scaffoldKey,
             appBar: new AppBar(
               title: new Text("Reservation"),
-
+              leading: IconButton(
+                  icon: Icon(Icons.arrow_back_ios_rounded, color: Colors.white),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }),
             ),
             body: new Padding(
                 padding: const EdgeInsets.all(20.0),
@@ -224,26 +302,33 @@ class CTowerResState extends State<CTowerRes> {
                       style: const TextStyle(
                           fontSize: 23, fontWeight: FontWeight.bold),
                     ),
-                    new Text(
-                      "Rate per hour is Rp. " + price.toString() + "\n",
-                      style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                    new Text(
-                      "Valet rate is Rp. " + valet.toString() + "\n",
-                      style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                    new TextFormField(
-                      decoration:
-                          new InputDecoration(labelText: "Number of Hours"),
-                      style: new TextStyle(fontSize: 18),
-                      validator: (val) => val.contains(new RegExp(r'[A-Z]'))
-                          ? 'Invalid Amount!'
-                          : null,
-                      onSaved: (val) => setState(() {
-                        hours = val;
-                      }),
+                        new Text(
+                          "Rate per hour is Rp. " + price.toString() + "\n",
+                          style: const TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                        new Text(
+                          "Valet rate is Rp. " +
+                              valet.toStringAsFixed(0) +
+                              "\n",
+                          style: const TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                        new Text(
+                          member + "!" + "\n",
+                          style: const TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                        new TextFormField(
+                          decoration:
+                              new InputDecoration(labelText: "Number of Hours"),
+                          style: new TextStyle(fontSize: 18),
+                          validator: (val) => val.contains(new RegExp(r'[A-Z]'))
+                              ? 'Invalid Amount!'
+                              : null,
+                          onSaved: (val) => setState(() {
+                            hours = val;
+                          }),
                     ),
                     new Padding(padding: const EdgeInsets.all(20.0)),
                     new Text(
@@ -289,17 +374,17 @@ class CTowerResState extends State<CTowerRes> {
                     new TextField(
                       decoration: InputDecoration(
                         filled: true,
-                        fillColor: Colors.blue,
-                        enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.blue, width: 5.0),
-                        ),
-                        hintText: "Total:      " + total.toString(),
-                        hintStyle: TextStyle(
-                            fontSize: 30.0,
-                            color: Colors.white,
-                            fontFamily: 'Raleway'),
-                        //  prefixIcon: Icon(Icons.shopping_cart_rounded,
+                            fillColor: Colors.blue,
+                            enabledBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.blue, width: 5.0),
+                            ),
+                            hintText: "Total:      " + total.toStringAsFixed(0),
+                            hintStyle: TextStyle(
+                                fontSize: 30.0,
+                                color: Colors.white,
+                                fontFamily: 'Raleway'),
+                            //  prefixIcon: Icon(Icons.shopping_cart_rounded,
                         //     size: 40, color: Colors.white),
                       ),
                     ),

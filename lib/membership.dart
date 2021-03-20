@@ -193,7 +193,7 @@ class MembershipState extends State<Membership> {
                               children: <Widget>[
                                 ListTile(
                                   title: Text('0 - 500 points'),
-                                  subtitle: Text('10% off'),
+                                  subtitle: Text('\nNo benefits'),
                                 )
                               ],
                             ),
@@ -204,7 +204,8 @@ class MembershipState extends State<Membership> {
                               children: <Widget>[
                                 ListTile(
                                   title: Text('501 - 2000 points'),
-                                  subtitle: Text('10% off'),
+                                  subtitle:
+                                      Text('\n10% discount on parking fees'),
                                 )
                               ],
                             ),
@@ -215,7 +216,8 @@ class MembershipState extends State<Membership> {
                               children: <Widget>[
                                 ListTile(
                                   title: Text('2001 - 5000 points'),
-                                  subtitle: Text('10% off'),
+                                  subtitle: Text(
+                                      '\n20% discount on parking fees\n10% discount on valet fees'),
                                 )
                               ],
                             ),
@@ -226,7 +228,8 @@ class MembershipState extends State<Membership> {
                               children: <Widget>[
                                 ListTile(
                                   title: Text('5001 - 10000 points'),
-                                  subtitle: Text('10% off'),
+                                  subtitle: Text(
+                                      '\n25% discount on parking fees\n20% discount on valet\nFree welcome drink'),
                                 )
                               ],
                             ),
@@ -237,13 +240,14 @@ class MembershipState extends State<Membership> {
                               children: <Widget>[
                                 ListTile(
                                   title: Text('10000+ points'),
-                                  subtitle: Text('10% off'),
+                                  subtitle: Text(
+                                      '\n50% discount on parking fees\nFree valet service on all locations\nFree welcome drink\nFree carwash service'),
                                 )
                               ],
                             ),
                           ],
                         ),
-                        ExpansionTile(
+                        /*   ExpansionTile(
                           title: Text(
                             "Terms and Conditions",
                             style: TextStyle(
@@ -262,7 +266,7 @@ class MembershipState extends State<Membership> {
                               ],
                             ),
                           ],
-                        ),
+                       */ //),
                       ],
                     )))));
   }

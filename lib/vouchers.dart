@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:parkway/citywalk.dart';
 import 'package:parkway/ctower.dart';
@@ -1364,10 +1365,14 @@ class CategoriesScroller extends StatelessWidget {
                   ),
                 ),
                 onTap: () {
-                  final snackbar = new SnackBar(
-                    content: new Text("You are already here!"),
+                  Fluttertoast.showToast(
+                    msg: "You are already here!",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity:
+                        ToastGravity.BOTTOM, // also possible "TOP" and "CENTER"
+                    //backgroundColor: "#e74c3c",
+                    //textColor: '#ffffff'
                   );
-                  scaffoldKey.currentState.showSnackBar(snackbar);
                 },
               ),
               InkWell(

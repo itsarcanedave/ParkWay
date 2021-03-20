@@ -4,13 +4,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:parkway/ratingwall.dart';
+import 'package:parkway/home.dart';
 
 //TODO: Erase completed reservations
-class Rating extends StatefulWidget {
+class RatingWall extends StatefulWidget {
   @override
-  RatingState createState() {
-    return new RatingState();
+  RatingWallState createState() {
+    return new RatingWallState();
   }
 }
 
@@ -23,10 +23,10 @@ String valetstatus;
 var uratepark = 12000;
 var urateval = 50000;
 var rating;
-var counter;
+
 var time = DateTime.now().millisecondsSinceEpoch.toString();
 
-class RatingState extends State<Rating> {
+class RatingWallState extends State<RatingWall> {
   double _value = 10;
   var valet;
   var hours;
@@ -48,7 +48,7 @@ class RatingState extends State<Rating> {
   CollectionReference users = FirebaseFirestore.instance.collection(name);
 
   final DocumentReference documentReference =
-  FirebaseFirestore.instance.doc("Users" + "/" + name);
+      FirebaseFirestore.instance.doc("Users" + "/" + name);
 
   final DocumentReference bookingReference = FirebaseFirestore.instance
       .doc("Users" + "/" + name + "/" + "Bookings" + "/" + "latest");
@@ -73,10 +73,6 @@ class RatingState extends State<Rating> {
     // "balance": "Flutter Developer"
     //};
 
-
-
-
-
     //documentReference.update({"balance": FieldValue.increment(50000 * -1)});
     //documentReference.update({"balance": FieldValue.increment(total * -1)});
 
@@ -93,17 +89,16 @@ class RatingState extends State<Rating> {
   }
 
   void _update() {
-    final DocumentReference placeReference =
-        FirebaseFirestore.instance.doc("Places" + "/" + uplace);
-    placeReference.update({"counter": FieldValue.increment(1)});
-    placeReference.get().then((datasnapshot) {
-      setState(() {
-        rating = datasnapshot.data()['rating'];
-        counter = datasnapshot.data()['counter'];
-        var newRating = rating + _value;
-        placeReference.update({"rating": newRating});
-      });
-    });
+    //final DocumentReference placeReference =
+    // FirebaseFirestore.instance.doc("Places" + "/" + uplace);
+    //placeReference.get().then((datasnapshot) {
+    // setState(() {
+    //  rating = datasnapshot.data()['rating'];
+    // counter = datasnapshot.data()['counter'];
+    // rating = rating / counter;
+
+    // });
+    // });
 
     //placeReference
     //   .update({"balance": FieldValue.increment(total*-1)});
@@ -111,16 +106,26 @@ class RatingState extends State<Rating> {
     //placeReference.update({"payments": FieldValue.increment(total)});
   }
 
-  void ratingProc() {
+  void _getBalance() {
     historyReference.get().then((datasnapshot) {
       if (datasnapshot.exists) {
         setState(() {
           uhours = int.parse(datasnapshot.data()['hours']);
           uplace = datasnapshot.data()['place'];
+
+          uvalet = datasnapshot.data()['valet'];
+          if (uvalet == "Yes") {
+            uvalet = "requested";
+            //isSwitched = true;
+
+          } else {
+            uvalet = "not requested";
+            //isSwitched = false;
+
+          }
         });
       }
       if (datasnapshot.exists == false) {
-        uplace = "You have no ongoing reservations";
         uhours = " ";
         uprice = " ";
         uvalet = " ";
@@ -135,22 +140,17 @@ class RatingState extends State<Rating> {
         });
       }
     });
-  }
-
-  void ratingFunc() {
-    final DocumentReference placeReference =
-        FirebaseFirestore.instance.doc("Places" + "/" + uplace);
-    placeReference.update({"space": FieldValue.increment(1)});
-    placeReference.get().then((datasnapshot) {
-      setState(() {
-        rating = datasnapshot.data()['rating'];
-        counter = datasnapshot.data()['counter'];
-      });
-    });
+    _update();
   }
 
   void _topup() {
-    performTopup();
+    final form = formKey.currentState;
+
+    if (form.validate()) {
+      form.save();
+
+      performTopup();
+    }
   }
 
   void _calculate() {
@@ -180,19 +180,32 @@ class RatingState extends State<Rating> {
     //     MaterialPageRoute(builder: (context) => History()),
     //   );
     //_getBalance();
-    ratingFunc();
+    final form = formKey.currentState;
+    form.reset();
     _update();
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => RatingWall()),
+      MaterialPageRoute(builder: (context) => HomeScreen()),
     );
   }
 
   @override
   void initState() {
-    ratingProc();
+    _getBalance();
     place = uplace;
     super.initState();
+    final DocumentReference bookingReference = FirebaseFirestore.instance
+        .doc("Users" + "/" + name + "/" + "Bookings" + "/" + "latest");
+    bookingReference.delete();
+    historyReference.get().then((datasnapshot) {
+      if (datasnapshot.exists) {
+        setState(() {
+          uplace = datasnapshot.data()['place'];
+
+          uvalet = datasnapshot.data()['valet'];
+        });
+      }
+    });
     subscription = documentReference.snapshots().listen((datasnapshot) {
       if (datasnapshot.exists) {
         setState(() {
@@ -210,10 +223,9 @@ class RatingState extends State<Rating> {
 
   @override
   Widget build(BuildContext context) {
-    ratingProc();
-    ratingFunc();
-    uratepark = 2000;
-    0;
+    _getBalance();
+
+    uratepark = 20000;
 
     if (uplace == null) {
       uplace = " ";
@@ -228,8 +240,6 @@ class RatingState extends State<Rating> {
       valet = " ";
     }
 
-
-
     if (total == null) {
       total = 0;
     }
@@ -237,13 +247,13 @@ class RatingState extends State<Rating> {
         key: scaffoldKey,
         appBar: new AppBar(
             backgroundColor: Colors.blue,
-            title: new Text("Location Rating"),
+            title: new Text("Thank You!"),
             leading: IconButton(
               icon: Icon(Icons.star_rounded, color: Colors.white),
               onPressed: () {
                 //Navigator.pop(context);
-              },)
-        ),
+              },
+            )),
         body: new Padding(
             padding: const EdgeInsets.all(20.0),
             child: SingleChildScrollView(
@@ -254,51 +264,16 @@ class RatingState extends State<Rating> {
                   children: <Widget>[
                     new Padding(padding: const EdgeInsets.all(20.0)),
                     new Text(
-                      uplace + "\n",
+                      "Thank you for your feedback!" + "\n",
                       style: const TextStyle(
                           fontSize: 23, fontWeight: FontWeight.bold),
                     ),
                     new Text(
-                      "Drag the slider below to rate this location",
+                      "We hope to see you again on your next reservation!" "\n",
+                      textAlign: TextAlign.center,
                       style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.bold),
+                          fontSize: 23, fontWeight: FontWeight.bold),
                     ),
-                    SliderTheme(
-                      data: SliderTheme.of(context).copyWith(
-                        activeTrackColor: Colors.blueAccent,
-                        inactiveTrackColor: Colors.red[100],
-                        trackShape: RoundedRectSliderTrackShape(),
-                        trackHeight: 6.0,
-                        thumbShape: RoundSliderThumbShape(enabledThumbRadius: 12.0),
-                        thumbColor: Colors.blueAccent,
-                        overlayColor: Colors.red.withAlpha(32),
-                        overlayShape: RoundSliderOverlayShape(overlayRadius: 28.0),
-                        tickMarkShape: RoundSliderTickMarkShape(),
-                        activeTickMarkColor: Colors.white,
-                        inactiveTickMarkColor: Colors.red[100],
-                        valueIndicatorShape: PaddleSliderValueIndicatorShape(),
-                        valueIndicatorColor: Colors.blueAccent,
-                        valueIndicatorTextStyle: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                      child: Slider(
-                        value: _value,
-                        min: 0,
-                        max: 10,
-                        divisions: 10,
-                        label: '$_value',
-                        onChanged: (value) {
-                          setState(
-                                () {
-                              _value = value;
-                            },
-                          );
-                        },
-                      ),
-                    ),
-
-
                     new Padding(
                       padding: const EdgeInsets.only(top: 20.0),
                     ),
@@ -313,13 +288,13 @@ class RatingState extends State<Rating> {
                       //},
                       shape: RoundedRectangleBorder(
                           borderRadius:
-                          BorderRadius.all(Radius.circular(10.0))),
+                              BorderRadius.all(Radius.circular(10.0))),
                       label: Text(
-                        'SUBMIT RATING',
+                        'GO HOME',
                         style: TextStyle(color: Colors.white, fontSize: 18),
                       ),
                       icon: Icon(
-                        Icons.star_rounded,
+                        Icons.home_rounded,
                         color: Colors.white,
                       ),
                       textColor: Colors.black,
@@ -329,9 +304,7 @@ class RatingState extends State<Rating> {
                     new Padding(
                       padding: const EdgeInsets.only(top: 20.0),
                     ),
-                    new TextField(
-                        enabled: false),
-
+                    new TextField(enabled: false),
                   ],
                 ),
               ),

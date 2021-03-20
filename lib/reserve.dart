@@ -54,6 +54,34 @@ class ReserveList extends StatelessWidget {
   }
 }
 
+var cityTowerRating;
+var citywalkRating;
+var gambirRating;
+var grandIndoRating;
+var kokasRating;
+var pacificRating;
+var plazaIndoRating;
+var plazaSemanggiRating;
+var plazaSenayanRating;
+var ritzRating;
+var sarinahRating;
+var sencyRating;
+var sudirmanRating;
+
+var cityTowerCounter;
+var citywalkCounter;
+var gambirCounter;
+var grandIndoRCounter;
+var kokasCounter;
+var pacificCounter;
+var plazaIndoCounter;
+var plazaSemanggiCounter;
+var plazaSenayanCounter;
+var ritzCounter;
+var sarinahCounter;
+var sencyCounter;
+var sudirmanCounter;
+
 String citytower = "City Tower Sudirman";
 var cityTowerPrice;
 String citywalk = "Citywalk Sudirman";
@@ -150,6 +178,9 @@ class _MyHomePageState extends State<MyHomePage> {
       if (datasnapshot.exists) {
         setState(() {
           cityTowerPrice = datasnapshot.data()['price'];
+          cityTowerRating = datasnapshot.data()['rating'];
+          cityTowerCounter = datasnapshot.data()['counter'];
+          cityTowerRating = cityTowerRating / cityTowerCounter;
         });
       }
     });
@@ -158,6 +189,9 @@ class _MyHomePageState extends State<MyHomePage> {
       if (datasnapshot.exists) {
         setState(() {
           citywalkPrice = datasnapshot.data()['price'];
+          citywalkRating = datasnapshot.data()['rating'];
+          citywalkCounter = datasnapshot.data()['counter'];
+          citywalkRating = citywalkRating / citywalkCounter;
         });
       }
     });
@@ -166,6 +200,9 @@ class _MyHomePageState extends State<MyHomePage> {
       if (datasnapshot.exists) {
         setState(() {
           gambirPrice = datasnapshot.data()['price'];
+          gambirRating = datasnapshot.data()['rating'];
+          gambirCounter = datasnapshot.data()['counter'];
+          gambirRating = gambirRating / gambirCounter;
         });
       }
     });
@@ -174,6 +211,9 @@ class _MyHomePageState extends State<MyHomePage> {
       if (datasnapshot.exists) {
         setState(() {
           grandindonesiaPrice = datasnapshot.data()['price'];
+          grandIndoRating = datasnapshot.data()['rating'];
+          grandIndoRCounter = datasnapshot.data()['counter'];
+          grandIndoRating = grandIndoRating / grandIndoRCounter;
         });
       }
     });
@@ -182,6 +222,9 @@ class _MyHomePageState extends State<MyHomePage> {
       if (datasnapshot.exists) {
         setState(() {
           kotakasablankaPrice = datasnapshot.data()['price'];
+          kokasRating = datasnapshot.data()['rating'];
+          kokasCounter = datasnapshot.data()['counter'];
+          kokasRating = kokasRating / kokasCounter;
         });
       }
     });
@@ -190,6 +233,9 @@ class _MyHomePageState extends State<MyHomePage> {
       if (datasnapshot.exists) {
         setState(() {
           pacificplacePrice = datasnapshot.data()['price'];
+          pacificRating = datasnapshot.data()['rating'];
+          pacificCounter = datasnapshot.data()['counter'];
+          pacificRating = pacificRating / pacificCounter;
         });
       }
     });
@@ -198,6 +244,9 @@ class _MyHomePageState extends State<MyHomePage> {
       if (datasnapshot.exists) {
         setState(() {
           plazaindonesiaPrice = datasnapshot.data()['price'];
+          plazaIndoRating = datasnapshot.data()['rating'];
+          plazaIndoCounter = datasnapshot.data()['counter'];
+          plazaIndoRating = plazaIndoRating / plazaIndoCounter;
         });
       }
     });
@@ -206,6 +255,9 @@ class _MyHomePageState extends State<MyHomePage> {
       if (datasnapshot.exists) {
         setState(() {
           plazasemanggiPrice = datasnapshot.data()['price'];
+          plazaSemanggiRating = datasnapshot.data()['rating'];
+          plazaSemanggiCounter = datasnapshot.data()['counter'];
+          plazaSemanggiRating = plazaSemanggiRating / plazaSemanggiCounter;
         });
       }
     });
@@ -214,6 +266,9 @@ class _MyHomePageState extends State<MyHomePage> {
       if (datasnapshot.exists) {
         setState(() {
           plazasenayanPrice = datasnapshot.data()['price'];
+          plazaSenayanRating = datasnapshot.data()['rating'];
+          plazaSenayanCounter = datasnapshot.data()['counter'];
+          plazaSenayanRating = plazaSenayanRating / plazaSenayanCounter;
         });
       }
     });
@@ -222,6 +277,9 @@ class _MyHomePageState extends State<MyHomePage> {
       if (datasnapshot.exists) {
         setState(() {
           ritzcarltonPrice = datasnapshot.data()['price'];
+          ritzRating = datasnapshot.data()['rating'];
+          ritzCounter = datasnapshot.data()['counter'];
+          ritzRating = ritzRating / ritzCounter;
         });
       }
     });
@@ -230,6 +288,9 @@ class _MyHomePageState extends State<MyHomePage> {
       if (datasnapshot.exists) {
         setState(() {
           sarinahPrice = datasnapshot.data()['price'];
+          sarinahRating = datasnapshot.data()['rating'];
+          sarinahCounter = datasnapshot.data()['counter'];
+          sarinahRating = sarinahRating / sarinahCounter;
         });
       }
     });
@@ -238,6 +299,9 @@ class _MyHomePageState extends State<MyHomePage> {
       if (datasnapshot.exists) {
         setState(() {
           senayancityPrice = datasnapshot.data()['price'];
+          sencyRating = datasnapshot.data()['rating'];
+          sencyCounter = datasnapshot.data()['counter'];
+          sencyRating = sencyRating / sencyCounter;
         });
       }
     });
@@ -246,6 +310,9 @@ class _MyHomePageState extends State<MyHomePage> {
       if (datasnapshot.exists) {
         setState(() {
           sudirmanplazaPrice = datasnapshot.data()['price'];
+          sudirmanRating = datasnapshot.data()['rating'];
+          sudirmanCounter = datasnapshot.data()['counter'];
+          sudirmanRating = sudirmanRating / sudirmanCounter;
         });
       }
     });
@@ -311,10 +378,6 @@ class _MyHomePageState extends State<MyHomePage> {
         currPos.longitude, -6.223572575946641, 106.8433518321592);
     String kokas = kokasDistance.toStringAsFixed(2);
 
-    String sudirmanPrice = "Rp. 12.000";
-    String thamrinPrice = "Rp. 10.000";
-    String kuninganPrice = "Rp. 8.000";
-    String otherPrice = "Rp. 5.000";
     List<String> dashList = LOC_DATA;
 
     final locMap = dashList.asMap();
@@ -322,7 +385,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     listItems.add(InkWell(
       child: Container(
-          height: 150,
+          height: 170,
           margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -342,6 +405,24 @@ class _MyHomePageState extends State<MyHomePage> {
                       citytower,
                       style: const TextStyle(
                           fontSize: 23, fontWeight: FontWeight.bold),
+                    ),
+                    RichText(
+                      text: TextSpan(
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 17,
+                            color: Colors.grey),
+                        children: [
+                          WidgetSpan(
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 0.0),
+                              child: Icon(Icons.star_rounded),
+                            ),
+                          ),
+                          TextSpan(text: cityTowerRating.toStringAsFixed(1)),
+                        ],
+                      ),
                     ),
                     Text(
                       cityTower + " kilometers away",
@@ -374,7 +455,7 @@ class _MyHomePageState extends State<MyHomePage> {
     listItems.add(
       InkWell(
         child: Container(
-            height: 150,
+            height: 170,
             margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -396,6 +477,24 @@ class _MyHomePageState extends State<MyHomePage> {
                         "Citywalk Sudirman",
                         style: const TextStyle(
                             fontSize: 23, fontWeight: FontWeight.bold),
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17,
+                              color: Colors.grey),
+                          children: [
+                            WidgetSpan(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 0.0),
+                                child: Icon(Icons.star_rounded),
+                              ),
+                            ),
+                            TextSpan(text: citywalkRating.toStringAsFixed(1)),
+                          ],
+                        ),
                       ),
                       Text(
                         citywalk + " kilometers away",
@@ -430,7 +529,7 @@ class _MyHomePageState extends State<MyHomePage> {
     listItems.add(
       InkWell(
         child: Container(
-            height: 150,
+            height: 170,
             margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -452,6 +551,24 @@ class _MyHomePageState extends State<MyHomePage> {
                         "Gambir Station",
                         style: const TextStyle(
                             fontSize: 23, fontWeight: FontWeight.bold),
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17,
+                              color: Colors.grey),
+                          children: [
+                            WidgetSpan(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 0.0),
+                                child: Icon(Icons.star_rounded),
+                              ),
+                            ),
+                            TextSpan(text: gambirRating.toStringAsFixed(1)),
+                          ],
+                        ),
                       ),
                       Text(
                         gambir + " kilometers away",
@@ -486,7 +603,7 @@ class _MyHomePageState extends State<MyHomePage> {
     listItems.add(
       InkWell(
         child: Container(
-            height: 150,
+            height: 170,
             margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -508,6 +625,24 @@ class _MyHomePageState extends State<MyHomePage> {
                         "Grand Indonesia",
                         style: const TextStyle(
                             fontSize: 23, fontWeight: FontWeight.bold),
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17,
+                              color: Colors.grey),
+                          children: [
+                            WidgetSpan(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 0.0),
+                                child: Icon(Icons.star_rounded),
+                              ),
+                            ),
+                            TextSpan(text: grandIndoRating.toStringAsFixed(1)),
+                          ],
+                        ),
                       ),
                       Text(
                         grandIndo + " kilometers away",
@@ -545,7 +680,7 @@ class _MyHomePageState extends State<MyHomePage> {
     listItems.add(
       InkWell(
         child: Container(
-            height: 150,
+            height: 170,
             margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -567,6 +702,24 @@ class _MyHomePageState extends State<MyHomePage> {
                         "Kota Kasablanka",
                         style: const TextStyle(
                             fontSize: 23, fontWeight: FontWeight.bold),
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17,
+                              color: Colors.grey),
+                          children: [
+                            WidgetSpan(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 0.0),
+                                child: Icon(Icons.star_rounded),
+                              ),
+                            ),
+                            TextSpan(text: kokasRating.toStringAsFixed(1)),
+                          ],
+                        ),
                       ),
                       Text(
                         kokas + " kilometers away",
@@ -604,7 +757,7 @@ class _MyHomePageState extends State<MyHomePage> {
     listItems.add(
       InkWell(
         child: Container(
-            height: 150,
+            height: 170,
             margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -626,6 +779,24 @@ class _MyHomePageState extends State<MyHomePage> {
                         "Pacific Place",
                         style: const TextStyle(
                             fontSize: 23, fontWeight: FontWeight.bold),
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17,
+                              color: Colors.grey),
+                          children: [
+                            WidgetSpan(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 0.0),
+                                child: Icon(Icons.star_rounded),
+                              ),
+                            ),
+                            TextSpan(text: pacificRating.toStringAsFixed(1)),
+                          ],
+                        ),
                       ),
                       Text(
                         pacific + " kilometers away",
@@ -663,7 +834,7 @@ class _MyHomePageState extends State<MyHomePage> {
     listItems.add(
       InkWell(
         child: Container(
-            height: 150,
+            height: 170,
             margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -686,6 +857,24 @@ class _MyHomePageState extends State<MyHomePage> {
                         style: const TextStyle(
                             fontSize: 23, fontWeight: FontWeight.bold),
                       ),
+                      RichText(
+                        text: TextSpan(
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17,
+                              color: Colors.grey),
+                          children: [
+                            WidgetSpan(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 0.0),
+                                child: Icon(Icons.star_rounded),
+                              ),
+                            ),
+                            TextSpan(text: plazaIndoRating.toStringAsFixed(1)),
+                          ],
+                        ),
+                      ),
                       Text(
                         plazaIndo + " kilometers away",
                         style:
@@ -695,7 +884,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         height: 10,
                       ),
                       Text(
-                        "Rp. " + plazaindonesiaPrice.toString(),
+                        "Rp. " + plazaindonesiaPrice.toStringAsFixed(1),
                         style: const TextStyle(
                             fontSize: 23,
                             color: Colors.black,
@@ -721,7 +910,7 @@ class _MyHomePageState extends State<MyHomePage> {
     listItems.add(
       InkWell(
         child: Container(
-            height: 150,
+            height: 170,
             margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -743,6 +932,25 @@ class _MyHomePageState extends State<MyHomePage> {
                         "Plaza Semanggi",
                         style: const TextStyle(
                             fontSize: 23, fontWeight: FontWeight.bold),
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17,
+                              color: Colors.grey),
+                          children: [
+                            WidgetSpan(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 0.0),
+                                child: Icon(Icons.star_rounded),
+                              ),
+                            ),
+                            TextSpan(
+                                text: plazaSemanggiRating.toStringAsFixed(1)),
+                          ],
+                        ),
                       ),
                       Text(
                         plazaSemanggi + " kilometers away",
@@ -779,7 +987,7 @@ class _MyHomePageState extends State<MyHomePage> {
     listItems.add(
       InkWell(
         child: Container(
-            height: 150,
+            height: 170,
             margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -801,6 +1009,25 @@ class _MyHomePageState extends State<MyHomePage> {
                         "Plaza Senayan",
                         style: const TextStyle(
                             fontSize: 23, fontWeight: FontWeight.bold),
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17,
+                              color: Colors.grey),
+                          children: [
+                            WidgetSpan(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 0.0),
+                                child: Icon(Icons.star_rounded),
+                              ),
+                            ),
+                            TextSpan(
+                                text: plazaSenayanRating.toStringAsFixed(1)),
+                          ],
+                        ),
                       ),
                       Text(
                         plazaSenayan + " kilometers away",
@@ -837,7 +1064,7 @@ class _MyHomePageState extends State<MyHomePage> {
     listItems.add(
       InkWell(
         child: Container(
-            height: 150,
+            height: 170,
             margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -859,6 +1086,24 @@ class _MyHomePageState extends State<MyHomePage> {
                         "Ritz-Carlton",
                         style: const TextStyle(
                             fontSize: 23, fontWeight: FontWeight.bold),
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17,
+                              color: Colors.grey),
+                          children: [
+                            WidgetSpan(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 0.0),
+                                child: Icon(Icons.star_rounded),
+                              ),
+                            ),
+                            TextSpan(text: ritzRating.toStringAsFixed(1)),
+                          ],
+                        ),
                       ),
                       Text(
                         ritzCarlton + " kilometers away",
@@ -895,7 +1140,7 @@ class _MyHomePageState extends State<MyHomePage> {
     listItems.add(
       InkWell(
         child: Container(
-            height: 150,
+            height: 170,
             margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -917,6 +1162,24 @@ class _MyHomePageState extends State<MyHomePage> {
                         "Sarinah",
                         style: const TextStyle(
                             fontSize: 23, fontWeight: FontWeight.bold),
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17,
+                              color: Colors.grey),
+                          children: [
+                            WidgetSpan(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 0.0),
+                                child: Icon(Icons.star_rounded),
+                              ),
+                            ),
+                            TextSpan(text: sarinahRating.toStringAsFixed(1)),
+                          ],
+                        ),
                       ),
                       Text(
                         sarinah + " kilometers away",
@@ -953,7 +1216,7 @@ class _MyHomePageState extends State<MyHomePage> {
     listItems.add(
       InkWell(
         child: Container(
-            height: 150,
+            height: 170,
             margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -975,6 +1238,24 @@ class _MyHomePageState extends State<MyHomePage> {
                         "Senayan City",
                         style: const TextStyle(
                             fontSize: 23, fontWeight: FontWeight.bold),
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17,
+                              color: Colors.grey),
+                          children: [
+                            WidgetSpan(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 0.0),
+                                child: Icon(Icons.star_rounded),
+                              ),
+                            ),
+                            TextSpan(text: sencyRating.toStringAsFixed(1)),
+                          ],
+                        ),
                       ),
                       Text(
                         senayanCity + " kilometers away",
@@ -1012,7 +1293,7 @@ class _MyHomePageState extends State<MyHomePage> {
     listItems.add(
       InkWell(
         child: Container(
-            height: 150,
+            height: 170,
             margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -1034,6 +1315,24 @@ class _MyHomePageState extends State<MyHomePage> {
                         "Sudirman Plaza",
                         style: const TextStyle(
                             fontSize: 23, fontWeight: FontWeight.bold),
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17,
+                              color: Colors.grey),
+                          children: [
+                            WidgetSpan(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 0.0),
+                                child: Icon(Icons.star_rounded),
+                              ),
+                            ),
+                            TextSpan(text: sudirmanRating.toStringAsFixed(1)),
+                          ],
+                        ),
                       ),
                       Text(
                         sudirmanPlaza + " kilometers away",
@@ -1090,32 +1389,15 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future refreshData() async {
     setState(() {
+      getPostsData();
       itemsData = listItems;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (cityTowerPrice == null ||
-        citywalkPrice == null ||
-        gambirPrice == null ||
-        grandindonesiaPrice == null ||
-        kotakasablankaPrice == null ||
-        pacificplacePrice == null ||
-        plazaindonesiaPrice == null ||
-        plazasemanggiPrice == null) {
-      cityTowerPrice = "Loading...";
-      citywalkPrice = "Loading...";
-      gambirPrice = "Loading...";
-      grandindonesiaPrice = "Loading...";
-      kotakasablankaPrice = "Loading...";
-      pacificplacePrice = "Loading...";
-      plazaindonesiaPrice = "Loading...";
-      plazasemanggiPrice = "Loading...";
-    }
-    if (points == null) {
-      points = 0;
-    }
+    //getPostsData();
+
     final Size size = MediaQuery.of(context).size;
     final double categoryHeight = size.height * 0.30;
     return RefreshIndicator(

@@ -3,8 +3,10 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:parkway/sencyloc.dart';
+import 'package:parkway/valet.dart';
 
 class SencyRes extends StatefulWidget {
   @override
@@ -30,6 +32,11 @@ class SencyResState extends State<SencyRes> {
   var topup;
   var amount;
   var code;
+  var valetDiscount;
+  var parkingDiscount;
+  var discount;
+  var points;
+  String member;
 
   bool isSwitched = false;
   StreamSubscription<DocumentSnapshot> subscription;
@@ -101,6 +108,25 @@ class SencyResState extends State<SencyRes> {
         setState(() {
           balance = datasnapshot.data()['balance'];
           //ard = datasnapshot.data()['cardnumber'];
+          points = datasnapshot.data()['points'];
+          if (points <= 500) {
+            member = "No membership benefits applied";
+          } else if (points <= 2000) {
+            member = "Bronze Member benefits applied";
+            parkingDiscount = 0.1;
+          } else if (points <= 5000) {
+            member = "Silver Member benefits applied";
+            parkingDiscount = 0.2;
+            valetDiscount = 0.1;
+          } else if (points <= 10000) {
+            member = "Gold Member benefits applied";
+            parkingDiscount = 0.25;
+            valetDiscount = 0.2;
+          } else {
+            member = "Platinum Member benefits applied";
+            parkingDiscount = 0.5;
+            valetDiscount = 1;
+          }
         });
       }
     });
@@ -109,6 +135,7 @@ class SencyResState extends State<SencyRes> {
         setState(() {
           price = datasnapshot.data()['price'];
           valet = datasnapshot.data()['valet'];
+          discount = datasnapshot.data()['discount'];
           //ard = datasnapshot.data()['cardnumber'];
         });
       }
@@ -121,7 +148,17 @@ class SencyResState extends State<SencyRes> {
     if (form.validate()) {
       form.save();
 
-      performTopup();
+      if (balance >= total) {
+        performTopup();
+      } else {
+        Fluttertoast.showToast(
+          msg: "Insufficient balance!",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM, // also possible "TOP" and "CENTER"
+          //backgroundColor: "#e74c3c",
+          //textColor: '#ffffff'
+        );
+      }
     }
   }
 
@@ -137,20 +174,31 @@ class SencyResState extends State<SencyRes> {
 
   void performCalc() {
     if (isSwitched == true) {
-      total = (int.parse(hours) * price) + valet;
+      total = (int.parse(hours) * price);
+      total = total - (total * parkingDiscount);
+      valet = valet - (valet * valetDiscount);
+      total = total + valet - discount;
       valetstatus = "Yes";
     } else if (isSwitched == false) {
       total = (int.parse(hours) * price);
+      total = total - (total * parkingDiscount) - discount;
       valetstatus = "No";
     }
   }
 
   void performTopup() {
     _process();
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => SencyLoc()),
-    );
+    if (isSwitched == true) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Valet()),
+      );
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => SencyLoc()),
+      );
+    }
 
     final form = formKey.currentState;
     form.reset();
@@ -180,10 +228,24 @@ class SencyResState extends State<SencyRes> {
     if (total == null) {
       total = 0;
     }
+    placeReference.get().then((datasnapshot) {
+      if (datasnapshot.exists) {
+        setState(() {
+          price = datasnapshot.data()['price'];
+          valet = datasnapshot.data()['valet'];
+          //ard = datasnapshot.data()['cardnumber'];
+        });
+      }
+    });
     return new Scaffold(
         key: scaffoldKey,
         appBar: new AppBar(
           title: new Text("Reservation"),
+          leading: IconButton(
+              icon: Icon(Icons.arrow_back_ios_rounded, color: Colors.white),
+              onPressed: () {
+                Navigator.pop(context);
+              }),
         ),
         body: new Padding(
             padding: const EdgeInsets.all(20.0),
@@ -223,7 +285,12 @@ class SencyResState extends State<SencyRes> {
                           fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                     new Text(
-                      "Valet rate is Rp. " + valet.toString() + "\n",
+                      "Valet rate is Rp. " + valet.toStringAsFixed(0) + "\n",
+                      style: const TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                    new Text(
+                      member + "!" + "\n",
                       style: const TextStyle(
                           fontSize: 16, fontWeight: FontWeight.bold),
                     ),
@@ -287,7 +354,7 @@ class SencyResState extends State<SencyRes> {
                           borderSide:
                               BorderSide(color: Colors.blue, width: 5.0),
                         ),
-                        hintText: "Total:      " + total.toString(),
+                        hintText: "Total:      " + total.toStringAsFixed(0),
                         hintStyle: TextStyle(
                             fontSize: 30.0,
                             color: Colors.white,

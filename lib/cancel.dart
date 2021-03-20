@@ -105,6 +105,7 @@ class CancelState extends State<Cancel> {
     //   .update({"balance": FieldValue.increment(total*-1)});
     placeReference.update({"payments": FieldValue.increment(uprice * -1)});
     placeReference.update({"payments": FieldValue.increment(uprice / 2)});
+    placeReference.update({"space": FieldValue.increment(1)});
     final DocumentReference valetReference =
         FirebaseFirestore.instance.doc("Valet" + "/" + uplace);
     valetReference.update({"$name": FieldValue.delete()});

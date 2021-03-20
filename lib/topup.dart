@@ -1,9 +1,10 @@
 import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:parkway/topup.dart';
+import 'package:parkway/reserve.dart';
 
 class TopUp extends StatefulWidget {
   @override
@@ -116,6 +117,13 @@ class TopUpState extends State<TopUp> {
         key: scaffoldKey,
         appBar: new AppBar(
           title: new Text("Top Up"),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios_rounded, color: Colors.white),
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ReserveList()),
+            ),
+          ),
         ),
         body: new Padding(
           padding: const EdgeInsets.all(20.0),

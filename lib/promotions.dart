@@ -1,5 +1,5 @@
 import 'dart:math' show cos, sqrt, asin;
-
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -1349,10 +1349,14 @@ class CategoriesScroller extends StatelessWidget {
                   ),
                 ),
                 onTap: () {
-                  final snackbar = new SnackBar(
-                    content: new Text("You are already here!"),
+                  Fluttertoast.showToast(
+                    msg: "You are already here!",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity:
+                        ToastGravity.BOTTOM, // also possible "TOP" and "CENTER"
+                    //backgroundColor: "#e74c3c",
+                    //textColor: '#ffffff'
                   );
-                  scaffoldKeyP.currentState.showSnackBar(snackbar);
                 },
               ),
               InkWell(

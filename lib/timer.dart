@@ -1,15 +1,15 @@
-import 'dart:math';
 import 'dart:async';
-import 'package:flutter/material.dart';
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:parkway/outstanding.dart';
 import 'package:parkway/rating.dart';
 
 class Timer extends StatefulWidget {
   @override
   TimerState createState() => TimerState();
-
 }
 
 final FirebaseAuth auth = FirebaseAuth.instance;
@@ -76,7 +76,7 @@ class TimerState extends State<Timer> with TickerProviderStateMixin {
         setState(() {
           uhours = int.parse(datasnapshot.data()['hours']);
           uplace = datasnapshot.data()['place'];
-          uprice = int.parse(datasnapshot.data()['price']);
+          //uprice = int.parse(datasnapshot.data()['price']);
           uvalet = datasnapshot.data()['valet'];
           animationController =
               AnimationController(vsync: this, duration: Duration(hours: uhours));
@@ -147,6 +147,7 @@ class TimerState extends State<Timer> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    //_getBalance();
     trackcheck();
     return Scaffold(
       backgroundColor: Colors.blueAccent,
