@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:parkway/plazasemanggiloc.dart';
 import 'package:parkway/valet.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class PlazaSemanggiRes extends StatefulWidget {
   @override
@@ -64,6 +64,18 @@ class PlazaSemanggiResState extends State<PlazaSemanggiRes> {
   void _signOut() {
     googleSignIn.signOut();
     print("User Signed out");
+  }
+
+  String toast() {
+    Fluttertoast.showToast(
+      msg: "Please enter a valid amount!!",
+      toastLength: Toast.LENGTH_LONG,
+      gravity: ToastGravity.BOTTOM, // also possible "TOP" and "CENTER"
+
+      //backgroundColor: "#e74c3c",
+      //Timer(Duration(seconds: 5), () => goToLogin(context));
+    );
+    return "Whole numbers only!";
   }
 
   void _process() {
@@ -298,9 +310,12 @@ class PlazaSemanggiResState extends State<PlazaSemanggiRes> {
                       decoration:
                           new InputDecoration(labelText: "Number of Hours"),
                       style: new TextStyle(fontSize: 18),
-                      validator: (val) => val.contains(new RegExp(r'[A-Z]'))
-                          ? 'Invalid Amount!'
-                          : null,
+                      validator: (val) =>
+                          val.contains(new RegExp(r'[A-Z],[,],[.]')) ||
+                                  val.contains(',') ||
+                                  val.contains('.')
+                              ? toast()
+                              : null,
                       onSaved: (val) => setState(() {
                         hours = val;
                       }),
@@ -354,7 +369,8 @@ class PlazaSemanggiResState extends State<PlazaSemanggiRes> {
                           borderSide:
                               BorderSide(color: Colors.blue, width: 5.0),
                         ),
-                        hintText: "Total:      " + total.toStringAsFixed(0),
+                        hintText:
+                            "Total:    " + "Rp. " + total.toStringAsFixed(0),
                         hintStyle: TextStyle(
                             fontSize: 30.0,
                             color: Colors.white,

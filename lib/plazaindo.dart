@@ -218,9 +218,9 @@ class PlazaIndoState extends State<PlazaIndo> {
                           fillColor: Colors.blue,
                           enabledBorder: OutlineInputBorder(
                             borderSide:
-                            BorderSide(color: Colors.blue, width: 5.0),
+                                BorderSide(color: Colors.blue, width: 5.0),
                           ),
-                          hintText: dummyparking.toString(),
+                          hintText: "Parking: " + dummyparking.toString(),
                           hintStyle: TextStyle(
                               fontSize: 22.0,
                               color: Colors.white,
@@ -245,9 +245,9 @@ class PlazaIndoState extends State<PlazaIndo> {
                           fillColor: Colors.blue,
                           enabledBorder: OutlineInputBorder(
                             borderSide:
-                            BorderSide(color: Colors.blue, width: 5.0),
+                                BorderSide(color: Colors.blue, width: 5.0),
                           ),
-                          hintText: dummyvalet.toString(),
+                          hintText: "Valet: " + dummyvalet.toString(),
                           hintStyle: TextStyle(
                               fontSize: 22.0,
                               color: Colors.white,

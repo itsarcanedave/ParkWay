@@ -69,6 +69,18 @@ class CTowerResState extends State<CTowerRes> {
     print("User Signed out");
   }
 
+  String toast() {
+    Fluttertoast.showToast(
+      msg: "Please enter a valid amount!!",
+      toastLength: Toast.LENGTH_LONG,
+      gravity: ToastGravity.BOTTOM, // also possible "TOP" and "CENTER"
+
+      //backgroundColor: "#e74c3c",
+      //Timer(Duration(seconds: 5), () => goToLogin(context));
+    );
+    return "Whole numbers only!";
+  }
+
   void _process() {
     // Map<String, String> data = <String, String>{
     // "balance": "Flutter Developer"
@@ -157,6 +169,9 @@ class CTowerResState extends State<CTowerRes> {
         });
       }
     });
+    if (hours.contains('.') || hours.contains(',')) {
+      toast();
+    }
     if (form.validate()) {
       form.save();
       if (balance >= total) {
@@ -323,13 +338,16 @@ class CTowerResState extends State<CTowerRes> {
                           decoration:
                               new InputDecoration(labelText: "Number of Hours"),
                           style: new TextStyle(fontSize: 18),
-                          validator: (val) => val.contains(new RegExp(r'[A-Z]'))
-                              ? 'Invalid Amount!'
-                              : null,
+                          validator: (val) =>
+                              val.contains(new RegExp(r'[A-Z],[,],[.]')) ||
+                                      val.contains(',') ||
+                                      val.contains('.')
+                                  ? toast()
+                                  : null,
                           onSaved: (val) => setState(() {
                             hours = val;
                           }),
-                    ),
+                        ),
                     new Padding(padding: const EdgeInsets.all(20.0)),
                     new Text(
                       "Valet",
@@ -379,7 +397,9 @@ class CTowerResState extends State<CTowerRes> {
                               borderSide:
                                   BorderSide(color: Colors.blue, width: 5.0),
                             ),
-                            hintText: "Total:      " + total.toStringAsFixed(0),
+                            hintText: "Total:    " +
+                                "Rp. " +
+                                total.toStringAsFixed(0),
                             hintStyle: TextStyle(
                                 fontSize: 30.0,
                                 color: Colors.white,

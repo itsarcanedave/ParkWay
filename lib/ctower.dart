@@ -1,11 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'dart:async';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:parkway/home.dart';
-import 'package:parkway/ctowerres.dart';
 import 'dart:math' show cos, sqrt, asin;
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:parkway/ctowerres.dart';
+import 'package:parkway/home.dart';
 import 'package:parkway/reserve.dart';
 
 class CTower extends StatefulWidget {
@@ -17,7 +16,7 @@ class CTower extends StatefulWidget {
 
 class CTowerState extends State<CTower> {
   final DocumentReference placeReference =
-      FirebaseFirestore.instance.doc("Places" + "/" + place);
+  FirebaseFirestore.instance.doc("Places" + "/" + place);
   var dummyparking;
   var dummyvalet;
   String service1;
@@ -41,8 +40,8 @@ class CTowerState extends State<CTower> {
   void getPostsData() async {
     final Position position = await Geolocator()
         .getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high,
-        )
+      desiredAccuracy: LocationAccuracy.high,
+    )
         .catchError((err) => print(err));
     var currPos = position;
     getCurrentLocation();
@@ -78,12 +77,12 @@ class CTowerState extends State<CTower> {
         title: Text("City Tower Sudirman"),
         backgroundColor: Colors.blue,
         leading: IconButton(
-        icon: Icon(Icons.arrow_back_ios_rounded, color: Colors.white),
-        onPressed: () => Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) =>ReserveList()),
-        ),
-      ),),
+          icon: Icon(Icons.arrow_back_ios_rounded, color: Colors.white),
+          onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) =>ReserveList()),
+          ),
+        ),),
       body: new Container(
           height: double.infinity,
           width: double.infinity,
@@ -175,7 +174,7 @@ class CTowerState extends State<CTower> {
                             borderSide:
                                 BorderSide(color: Colors.blue, width: 5.0),
                           ),
-                          hintText: dummyparking.toString(),
+                          hintText: "Parking: " + dummyparking.toString(),
                           hintStyle: TextStyle(
                               fontSize: 22.0,
                               color: Colors.white,
@@ -202,7 +201,7 @@ class CTowerState extends State<CTower> {
                             borderSide:
                                 BorderSide(color: Colors.blue, width: 5.0),
                           ),
-                          hintText: dummyvalet.toString(),
+                          hintText: "Valet: " + dummyvalet.toString(),
                           hintStyle: TextStyle(
                               fontSize: 22.0,
                               color: Colors.white,
@@ -260,7 +259,7 @@ class CTowerState extends State<CTower> {
                       //},
                       shape: RoundedRectangleBorder(
                           borderRadius:
-                              BorderRadius.all(Radius.circular(10.0))),
+                          BorderRadius.all(Radius.circular(10.0))),
                       label: Text(
                         'RESERVE',
                         style: TextStyle(color: Colors.blue, fontSize: 18),

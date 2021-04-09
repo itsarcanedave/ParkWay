@@ -325,7 +325,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void toast() {
     Fluttertoast.showToast(
       msg:
-          "Use the built-in back button to navigate to the previous page\nDo not use the back button\nof your device or it will\ncrash the application!",
+          "Use the app back button to navigate to the previous page\nDo not use the back button\nof your device or it will\ncrash the application!",
       toastLength: Toast.LENGTH_LONG,
       gravity: ToastGravity.BOTTOM, // also possible "TOP" and "CENTER"
       //backgroundColor: "#e74c3c",

@@ -39,6 +39,7 @@ class RatingState extends State<Rating> {
   var dummyparking;
   var dummyvalet;
   String uvalet;
+
   var uhours;
   var uprice;
   var uratepark;
@@ -117,6 +118,7 @@ class RatingState extends State<Rating> {
         setState(() {
           uhours = int.parse(datasnapshot.data()['hours']);
           uplace = datasnapshot.data()['place'];
+          uprice = datasnapshot.data()['price'];
         });
       }
       if (datasnapshot.exists == false) {
@@ -215,18 +217,6 @@ class RatingState extends State<Rating> {
     uratepark = 2000;
     0;
 
-    if (uplace == null) {
-      uplace = " ";
-    }
-    if (uhours == null) {
-      hours = " ";
-    }
-    if (uprice == null) {
-      uprice = " ";
-    }
-    if (uvalet == null) {
-      valet = " ";
-    }
 
 
 
@@ -254,7 +244,16 @@ class RatingState extends State<Rating> {
                   children: <Widget>[
                     new Padding(padding: const EdgeInsets.all(20.0)),
                     new Text(
-                      uplace + "\n",
+                      uplace +
+                          "\n" +
+                          "You reserved for " +
+                          uhours.toString() +
+                          " hours" "\n" +
+                          "Rp. " +
+                          uprice.substring(0, uprice.length - 2) +
+                          " was paid" +
+                          "\n",
+                      textAlign: TextAlign.center,
                       style: const TextStyle(
                           fontSize: 23, fontWeight: FontWeight.bold),
                     ),
