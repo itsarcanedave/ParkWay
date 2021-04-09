@@ -1,16 +1,14 @@
 import 'dart:async';
 import 'dart:math';
 import 'dart:math' show cos, sqrt, asin;
-import 'package:geolocator/geolocator.dart';
-import 'package:pinch_zoom/pinch_zoom.dart';
-import 'package:parkway/home.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:parkway/topup.dart';
-import 'package:parkway/reserve.dart';
-import 'package:parkway/cttowerloc.dart';
+import 'package:parkway/home.dart';
+import 'package:parkway/timer.dart';
 import 'package:parkway/timerwall.dart';
 
 class P1 extends StatefulWidget {
@@ -23,6 +21,7 @@ class P1 extends StatefulWidget {
 final FirebaseAuth auth = FirebaseAuth.instance;
 final User user = auth.currentUser;
 final name = user.displayName;
+var rand;
 String place = "City Tower Sudirman";
 double cityTowerTime;
 String cityTowerD;
@@ -136,6 +135,129 @@ class P1State extends State<P1> {
   void _signOut() {
     googleSignIn.signOut();
     print("User Signed out");
+  }
+
+  void getPosData() async {
+    final Position position = await Geolocator()
+        .getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high,
+        )
+        .catchError((err) => print(err));
+    var currPos = position;
+    getCurrentLocation();
+    double calculateDistance(lat1, lon1, lat2, lon2) {
+      var p = 0.017453292519943295;
+      var c = cos;
+      var a = 0.5 -
+          c((lat2 - lat1) * p) / 2 +
+          c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p)) / 2;
+      return 12742 * asin(sqrt(a));
+    }
+
+    if (uplace == "City Tower Sudirman") {
+      double cityTowerDistance = calculateDistance(currPos.latitude,
+          currPos.longitude, -6.19910844638473, 106.82351935077837);
+      if (cityTowerDistance == 0) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Timer()));
+      }
+    }
+    if (uplace == "Citywalk Sudirman") {
+      double citywalkDistance = calculateDistance(currPos.latitude,
+          currPos.longitude, -6.208590611715428, 106.81764705100849);
+      if (citywalkDistance == 0) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Timer()));
+      }
+    }
+    if (uplace == "Gambir Station") {
+      double gambirDistance = calculateDistance(currPos.latitude,
+          currPos.longitude, -6.176673044686259, 106.83052811106369);
+      if (gambirDistance == 0) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Timer()));
+      }
+    }
+    if (uplace == "Grand Indonesia") {
+      double grandIndoDistance = calculateDistance(currPos.latitude,
+          currPos.longitude, -6.196746580727995, 106.82256895028455);
+      if (grandIndoDistance == 0) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Timer()));
+      }
+    }
+    if (uplace == "Kota Kasablanka") {
+      double kokasDistance = calculateDistance(currPos.latitude,
+          currPos.longitude, -6.223572575946641, 106.8433518321592);
+      if (kokasDistance == 0) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Timer()));
+      }
+    }
+    if (uplace == "Pacific Place") {
+      double pacificDistance = calculateDistance(currPos.latitude,
+          currPos.longitude, -6.224101298778742, 106.80973889382585);
+      if (pacificDistance == 0) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Timer()));
+      }
+    }
+    if (uplace == "Plaza Indonesia") {
+      double plazaIndoDistance = calculateDistance(currPos.latitude,
+          currPos.longitude, -6.208590611715428, 106.81764705100849);
+      if (plazaIndoDistance == 0) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Timer()));
+      }
+    }
+    if (uplace == "Plaza Semanggi") {
+      double plazaSemanggiDistance = calculateDistance(currPos.latitude,
+          currPos.longitude, -6.219701635798008, 106.81446568826847);
+      if (plazaSemanggiDistance == 0) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Timer()));
+      }
+    }
+    if (uplace == "Plaza Senayan") {
+      double plazaSenayanDistance = calculateDistance(currPos.latitude,
+          currPos.longitude, -6.225330942133653, 106.7996869300261);
+      if (plazaSenayanDistance == 0) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Timer()));
+      }
+    }
+    if (uplace == "Ritz-Carlton") {
+      double ritzCarltonDistance = calculateDistance(currPos.latitude,
+          currPos.longitude, -6.228744816929019, 106.82702840610564);
+      if (ritzCarltonDistance == 0) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Timer()));
+      }
+    }
+    if (uplace == "Sarinah") {
+      double sarinahDistance = calculateDistance(currPos.latitude,
+          currPos.longitude, -6.187251205670757, 106.82417237927989);
+      if (sarinahDistance == 0) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Timer()));
+      }
+    }
+    if (uplace == "Senayan City") {
+      double senayanCityDistance = calculateDistance(currPos.latitude,
+          currPos.longitude, -6.227203389715999, 106.79739829495486);
+      if (senayanCityDistance == 0) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Timer()));
+      }
+    }
+    if (uplace == "Sudirman Plaza") {
+      double sudirmanPlazaDistance = calculateDistance(currPos.latitude,
+          currPos.longitude, -6.208684335998033, 106.82246688684239);
+      if (sudirmanPlazaDistance == 0) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Timer()));
+      }
+    }
   }
 
   void _process() {
@@ -359,12 +481,19 @@ class P1State extends State<P1> {
     form.reset();
   }
 
+  int random(min, max) {
+    var rn = new Random();
+    return rand = min + rn.nextInt(max - min);
+  }
+
   @override
   void initState() {
+    getPosData();
     getPostsData();
     // TODO: implement initState
     super.initState();
     _getBalance();
+    random(7, 17);
 
     subscription = documentReference.snapshots().listen((datasnapshot) {
       if (datasnapshot.exists) {
@@ -385,12 +514,16 @@ class P1State extends State<P1> {
 
   @override
   Widget build(BuildContext context) {
+    getPosData();
     print(p1);
-    random(min, max){
-      var rn = new Random();
-      return min + rn.nextInt(max - min);
-    }
-    print(random(5,20));
+    historyReference.get().then((datasnapshot) {
+      if (datasnapshot.exists) {
+        setState(() {
+          uplace = datasnapshot.data()['place'];
+        });
+      }
+    });
+
     return Scaffold(
       appBar: new AppBar(
         title: new Text("Location Map"),
@@ -407,14 +540,14 @@ class P1State extends State<P1> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           new Text(
-            "Your parking location is " + random(7,17).toString(),
+            "Your parking location is " + rand.toString(),
             style: TextStyle(color: Colors.black, fontSize: 18),
           ),
           new Padding(
             padding: const EdgeInsets.all(10.0),
           ),
-      Center(
-      /*  child: PinchZoom(
+          Center(
+            /*  child: PinchZoom(
           image: Image.network(p1),
           zoomedBackgroundColor: Colors.black.withOpacity(0.5),
           resetDuration: const Duration(milliseconds: 100),
@@ -422,11 +555,11 @@ class P1State extends State<P1> {
           onZoomStart: (){print('Start zooming');},
           onZoomEnd: (){print('Stop zooming');},
        */// ),
-        child: InteractiveViewer(
-          child: Image.network(p1),
-        ),
+            child: InteractiveViewer(
+              child: Image.network(p1),
+            ),
 
-      ),
+          ),
           new Padding(
             padding: const EdgeInsets.all(10.0),
           ),
@@ -445,7 +578,7 @@ class P1State extends State<P1> {
               style: TextStyle(color: Colors.white, fontSize: 18),
             ),
           ),
-    ],
+        ],
       ),
 
     );

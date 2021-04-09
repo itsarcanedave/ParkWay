@@ -87,12 +87,6 @@ class TimerState extends State<Timer> with TickerProviderStateMixin {
 
         });
       }
-      if (datasnapshot.exists == false) {
-        uplace = "You have no ongoing reservations";
-        //uhours = 1;
-        uprice = " ";
-        uvalet = " ";
-      }
     });
 
     documentReference.get().then((datasnapshot) {

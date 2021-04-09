@@ -68,7 +68,7 @@ var ritzRating;
 var sarinahRating;
 var sencyRating;
 var sudirmanRating;
-
+var i = 0;
 var cityTowerCounter;
 var citywalkCounter;
 var gambirCounter;
@@ -333,7 +333,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void getPostsData() async {
+  void getLocData() async {
     final Position position = await Geolocator()
         .getCurrentPosition(
           desiredAccuracy: LocationAccuracy.high,
@@ -1379,15 +1379,60 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
 
+    for (i = 0; i <= 30; i++) {
+      listItems.add(InkWell(
+        child: Container(
+            height: 170,
+            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.black.withAlpha(100), blurRadius: 10.0),
+                ]),
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        "More places to be added soon!",
+                        style: const TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            )),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => SudirmanPlaza()),
+          );
+        },
+      ));
+    }
+
     setState(() {
       itemsData = listItems;
     });
   }
 
+  void loading() {
+    for (i = 0; i <= 1; i++) {}
+  }
+
   @override
   void initState() {
     super.initState();
-    getPostsData();
+    //loading();
+    //getLocData();
     getBalanceHere();
     toast();
     controller.addListener(() {
@@ -1402,14 +1447,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future refreshData() async {
     setState(() {
-      getPostsData();
-      itemsData = listItems;
+      getLocData();
+      //itemsData = listItems;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    //getPostsData();
+    getLocData();
 
     final Size size = MediaQuery.of(context).size;
     final double categoryHeight = size.height * 0.30;
