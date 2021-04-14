@@ -191,7 +191,7 @@ class PlazaIndoLocState extends State<PlazaIndoLoc> {
 
   void _process() {
     // Map<String, String> data = <String, String>{
-    // "balance": "Flutter Developer"
+    // "balance": ""
     //};
 
     Map<String, String> data = <String, String>{
@@ -371,7 +371,7 @@ class PlazaIndoLocState extends State<PlazaIndoLoc> {
 
   @override
   void initState() {
-    // TODO: implement initState
+    // : implement initState
     super.initState();
     _getBalance();
     getPostsData();
@@ -386,7 +386,7 @@ class PlazaIndoLocState extends State<PlazaIndoLoc> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    // : implement dispose
     super.dispose();
     subscription?.cancel();
   }

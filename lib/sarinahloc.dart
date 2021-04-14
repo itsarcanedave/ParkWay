@@ -195,7 +195,7 @@ class SarinahLocState extends State<SarinahLoc> {
 
   void _process() {
     // Map<String, String> data = <String, String>{
-    // "balance": "Flutter Developer"
+    // "balance": ""
     //};
 
     Map<String, String> data = <String, String>{
@@ -375,7 +375,7 @@ class SarinahLocState extends State<SarinahLoc> {
 
   @override
   void initState() {
-    // TODO: implement initState
+    // : implement initState
     super.initState();
     _getBalance();
     getPostsData();
@@ -390,7 +390,7 @@ class SarinahLocState extends State<SarinahLoc> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    // : implement dispose
     super.dispose();
     subscription?.cancel();
   }

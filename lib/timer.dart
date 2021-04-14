@@ -289,8 +289,7 @@ class TimerPainter extends CustomPainter {
     double progress = (1.0 - animation.value) * 2 * pi;
     canvas.drawArc(Offset.zero & size, pi * 1.5, -progress, false, paint);
 
-    // TODO: implement paint
-
+    // : implement paint
   }
 
   @override

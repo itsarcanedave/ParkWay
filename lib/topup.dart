@@ -43,9 +43,6 @@ class TopUpState extends State<TopUp> {
   }
 
   void _process() {
-    // Map<String, String> data = <String, String>{
-    // "balance": "Flutter Developer"
-    //};
 
     documentReference
         .update({"balance": FieldValue.increment(int.parse(amount))});
@@ -104,7 +101,7 @@ class TopUpState extends State<TopUp> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    // : implement dispose
     super.dispose();
     subscription?.cancel();
   }

@@ -6,6 +6,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:parkway/topup.dart';
 import 'package:parkway/updatecard.dart';
 import 'package:parkway/reserve.dart';
+import 'package:parkway/QR.dart';
 
 class Payment extends StatefulWidget {
   @override
@@ -159,11 +160,30 @@ class PaymentState extends State<Payment> {
               onPressed: () {
                 Navigator.push(
                   context,
+                  MaterialPageRoute(builder: (context) => QR()),
+                );
+              },
+              child: new Text(
+                "Top Up On-Site with QR Code",
+                style: TextStyle(color: Colors.white, fontSize: 16),
+              ),
+            ),
+            new Padding(
+              padding: const EdgeInsets.all(10.0),
+            ),
+            new RaisedButton(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10.0))),
+              color: Colors.blueAccent,
+              //onPressed: _add,
+              onPressed: () {
+                Navigator.push(
+                  context,
                   MaterialPageRoute(builder: (context) => TopUp()),
                 );
               },
               child: new Text(
-                "Top Up",
+                "Top Up with Card",
                 style: TextStyle(color: Colors.white, fontSize: 16),
               ),
             ),

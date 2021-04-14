@@ -187,7 +187,7 @@ class ValetState extends State<Valet> {
 
   void _process() {
     // Map<String, String> data = <String, String>{
-    // "balance": "Flutter Developer"
+    // "balance": ""
     //};
     //getPostsData();
     final DocumentReference valetReference =

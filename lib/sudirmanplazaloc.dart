@@ -10,9 +10,6 @@ import 'package:parkway/home.dart';
 import 'package:parkway/p1.dart';
 import 'package:parkway/p2.dart';
 import 'package:parkway/p3.dart';
-import 'package:parkway/p4.dart';
-import 'package:parkway/p5.dart';
-import 'package:parkway/p6.dart';
 
 class SudirmanPlazaLoc extends StatefulWidget {
   @override
@@ -196,7 +193,7 @@ class SudirmanPlazaLocState extends State<SudirmanPlazaLoc> {
 
   void _process() {
     // Map<String, String> data = <String, String>{
-    // "balance": "Flutter Developer"
+    // "balance": ""
     //};
 
     Map<String, String> data = <String, String>{
@@ -376,7 +373,7 @@ class SudirmanPlazaLocState extends State<SudirmanPlazaLoc> {
 
   @override
   void initState() {
-    // TODO: implement initState
+    // : implement initState
     super.initState();
     _getBalance();
     getPostsData();
@@ -391,7 +388,7 @@ class SudirmanPlazaLocState extends State<SudirmanPlazaLoc> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    // : implement dispose
     super.dispose();
     subscription?.cancel();
   }

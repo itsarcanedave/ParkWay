@@ -75,9 +75,8 @@ class CancelState extends State<Cancel> {
 
   void _process() {
     // Map<String, String> data = <String, String>{
-    // "balance": "Flutter Developer"
+    // "balance": ""
     //};
-
 
     documentReference
         .update({"balance": FieldValue.increment(uprice)});

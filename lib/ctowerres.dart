@@ -83,7 +83,7 @@ class CTowerResState extends State<CTowerRes> {
 
   void _process() {
     // Map<String, String> data = <String, String>{
-    // "balance": "Flutter Developer"
+    // "balance": ""
     //};
 
     Map<String, String> data = <String, String>{

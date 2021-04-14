@@ -341,6 +341,7 @@ class _MyHomePageState extends State<MyHomePage> {
         .catchError((err) => print(err));
     var currPos = position;
     getCurrentLocation();
+
     double calculateDistance(lat1, lon1, lat2, lon2) {
       var p = 0.017453292519943295;
       var c = cos;

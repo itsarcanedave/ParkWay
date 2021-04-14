@@ -12,7 +12,7 @@ class IntroScreen extends StatefulWidget {
 class _SplashScreenState extends State<IntroScreen> {
   @override
   void initState() {
-    // TODO: implement initState
+    // : implement initState
     super.initState();
 
     Timer(

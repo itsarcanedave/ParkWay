@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:parkway/ratingwall.dart';
 
-//TODO: Erase completed reservations
+//: Erase completed reservations
 class Rating extends StatefulWidget {
   @override
   RatingState createState() {
@@ -71,12 +71,8 @@ class RatingState extends State<Rating> {
 
   void _process() {
     // Map<String, String> data = <String, String>{
-    // "balance": "Flutter Developer"
+    // "balance": ""
     //};
-
-
-
-
 
     //documentReference.update({"balance": FieldValue.increment(50000 * -1)});
     //documentReference.update({"balance": FieldValue.increment(total * -1)});

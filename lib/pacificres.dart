@@ -80,7 +80,7 @@ class PacificResState extends State<PacificRes> {
 
   void _process() {
     // Map<String, String> data = <String, String>{
-    // "balance": "Flutter Developer"
+    // "balance": ""
     //};
 
     Map<String, String> data = <String, String>{

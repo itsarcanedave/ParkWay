@@ -138,7 +138,7 @@ class P5State extends State<P5> {
 
   void _process() {
     // Map<String, String> data = <String, String>{
-    // "balance": "Flutter Developer"
+    // "balance": ""
     //};
 
     Map<String, String> data = <String, String>{
@@ -490,7 +490,7 @@ class P5State extends State<P5> {
     getPosData();
     getPostsData();
     random(1, 6);
-    // TODO: implement initState
+    // : implement initState
     super.initState();
     _getBalance();
 
@@ -505,7 +505,7 @@ class P5State extends State<P5> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    // : implement dispose
     super.dispose();
     subscription?.cancel();
   }

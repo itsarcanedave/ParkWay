@@ -262,7 +262,7 @@ class P1State extends State<P1> {
 
   void _process() {
     // Map<String, String> data = <String, String>{
-    // "balance": "Flutter Developer"
+    // "balance": ""
     //};
 
     Map<String, String> data = <String, String>{
@@ -490,7 +490,7 @@ class P1State extends State<P1> {
   void initState() {
     getPosData();
     getPostsData();
-    // TODO: implement initState
+    // : implement initState
     super.initState();
     _getBalance();
     random(7, 17);
@@ -506,7 +506,7 @@ class P1State extends State<P1> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    // : implement dispose
     super.dispose();
     subscription?.cancel();
   }

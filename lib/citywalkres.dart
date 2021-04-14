@@ -79,9 +79,6 @@ class CitywalkResState extends State<CitywalkRes> {
   }
 
   void _process() {
-    // Map<String, String> data = <String, String>{
-    // "balance": "Flutter Developer"
-    //};
 
     Map<String, String> data = <String, String>{
       "place": place,

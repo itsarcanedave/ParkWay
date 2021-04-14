@@ -76,9 +76,8 @@ class TimerWallState extends State<TimerWall> {
 
   void _process() {
     // Map<String, String> data = <String, String>{
-    // "balance": "Flutter Developer"
+    // "balance": ""
     //};
-
 
     documentReference
         .update({"balance": FieldValue.increment(uprice)});

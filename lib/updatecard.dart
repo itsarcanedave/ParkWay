@@ -1,9 +1,9 @@
 import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:parkway/topup.dart';
 
 class UpdateCard extends StatefulWidget {
   @override
@@ -43,7 +43,7 @@ class UpdateCardState extends State<UpdateCard> {
 
   void _process() {
     // Map<String, String> data = <String, String>{
-    // "balance": "Flutter Developer"
+    // "balance": ""
     //}; num
     Map<String, num> data = <String, num>{
       "cardnumber": int.parse(card),
@@ -102,7 +102,7 @@ class UpdateCardState extends State<UpdateCard> {
 
   @override
   void initState() {
-    // TODO: implement initState
+    // : implement initState
     super.initState();
     subscription = documentReference.snapshots().listen((datasnapshot) {
       if (datasnapshot.exists) {
@@ -115,7 +115,7 @@ class UpdateCardState extends State<UpdateCard> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    // : implement dispose
     super.dispose();
     subscription?.cancel();
   }

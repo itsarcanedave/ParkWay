@@ -189,7 +189,7 @@ class KokasLocState extends State<KokasLoc> {
 
   void _process() {
     // Map<String, String> data = <String, String>{
-    // "balance": "Flutter Developer"
+    // "balance": ""
     //};
 
     Map<String, String> data = <String, String>{
@@ -369,7 +369,7 @@ class KokasLocState extends State<KokasLoc> {
 
   @override
   void initState() {
-    // TODO: implement initState
+    // : implement initState
     super.initState();
     _getBalance();
     getPostsData();
@@ -384,7 +384,7 @@ class KokasLocState extends State<KokasLoc> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    // : implement dispose
     super.dispose();
     subscription?.cancel();
   }

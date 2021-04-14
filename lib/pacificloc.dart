@@ -190,7 +190,7 @@ class PacificLocState extends State<PacificLoc> {
 
   void _process() {
     // Map<String, String> data = <String, String>{
-    // "balance": "Flutter Developer"
+    // "balance": ""
     //};
 
     Map<String, String> data = <String, String>{
@@ -370,7 +370,7 @@ class PacificLocState extends State<PacificLoc> {
 
   @override
   void initState() {
-    // TODO: implement initState
+    // : implement initState
     super.initState();
     _getBalance();
     getPostsData();
@@ -385,7 +385,7 @@ class PacificLocState extends State<PacificLoc> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    // : implement dispose
     super.dispose();
     subscription?.cancel();
   }

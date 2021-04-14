@@ -1,21 +1,15 @@
 import 'dart:async';
 import 'dart:math' show cos, sqrt, asin;
-import 'package:geolocator/geolocator.dart';
-import 'package:parkway/home.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:parkway/topup.dart';
-import 'package:parkway/reserve.dart';
+import 'package:parkway/home.dart';
 import 'package:parkway/p1.dart';
 import 'package:parkway/p2.dart';
 import 'package:parkway/p3.dart';
-import 'package:parkway/p4.dart';
-import 'package:parkway/p5.dart';
-import 'package:parkway/p6.dart';
-
-
 
 class CTowerLoc extends StatefulWidget {
   @override
@@ -138,7 +132,7 @@ class CTowerLocState extends State<CTowerLoc> {
 
   void _process() {
     // Map<String, String> data = <String, String>{
-    // "balance": "Flutter Developer"
+    // "balance": ""
     //};
 
     Map<String, String> data = <String, String>{
@@ -352,7 +346,7 @@ class CTowerLocState extends State<CTowerLoc> {
   @override
   void initState() {
     getPostsData();
-    // TODO: implement initState
+    // : implement initState
     super.initState();
     _getBalance();
 
@@ -367,7 +361,7 @@ class CTowerLocState extends State<CTowerLoc> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    // : implement dispose
     super.dispose();
     subscription?.cancel();
   }

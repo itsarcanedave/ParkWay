@@ -66,12 +66,8 @@ class OutstandingState extends State<Outstanding> {
 
   void _process() {
     // Map<String, String> data = <String, String>{
-    // "balance": "Flutter Developer"
+    // "balance": ""
     //};
-
-
-
-
 
     documentReference.update({"balance": FieldValue.increment(50000 * -1)});
     //documentReference.update({"balance": FieldValue.increment(total * -1)});
