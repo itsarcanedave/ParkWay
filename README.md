@@ -1,6 +1,6 @@
 # ParkWay
 
-ParkWay for Software Engineering Studio Project
+Welcome to ParkWay!
 
 A metropolitan parking application aimed to support the evolution of Self-Driving Cars.
 
